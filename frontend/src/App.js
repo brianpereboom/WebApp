@@ -125,7 +125,6 @@ function App({signOut}) {
 
   return (
   	<>
-    	<View className="App">
     		<Context.Provider value={{ environment, setEnvironment, path, setPath, user, setUser, hosted, setHosted, recommended, events, setEvents, newEvent, setNewEvent, interests, setInterests, topics, setTopics}}>
       		<header>
         		<nav className="navbar bg-primary">
@@ -137,13 +136,14 @@ function App({signOut}) {
               		<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Events"); setEnvironment({...environment, saved: false})}}>Events</button></li>
               		<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Discover"); setEnvironment({...environment, saved: false})}}>Discover</button></li>
             		</ul>
-      				<Button onClick={signOut}>Sign Out</Button>
+    				<View className="App">
+      					<Button onClick={signOut}>Sign Out</Button>
+    				</View>
           		</div>
         		</nav>
       		</header>
       		<GetPage></GetPage>
     		</Context.Provider>
-    	</View>
     </>
   );
 }
