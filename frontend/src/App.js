@@ -8,7 +8,17 @@ import Discover from "./Discover";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
 
-function App() {
+import "@aws-amplify/ui-react/styles.css";
+import {
+  withAuthenticator,
+  Button,
+  Heading,
+  Image,
+  View,
+  Card,
+} from "@aws-amplify/ui-react";
+
+function App({signOut}) {
   const cachedEnvironment = JSON.parse(localStorage.getItem("environment")) || { saved: false };
   const [environment, setEnvironment] = useState(cachedEnvironment);
 
@@ -117,23 +127,31 @@ function App() {
   }
 
   return (
-    <Context.Provider value={{ environment, setEnvironment, path, setPath, user, setUser, hosted, setHosted, recommended, events, setEvents, newEvent, setNewEvent, interests, setInterests, topics, setTopics}}>
-      <header>
-        <nav className="navbar bg-primary">
-          <div className="container-fluid">
-            <a className="navbar-brand nav-title" href="/">IRL</a>
-            <ul className="navbar-nav me-auto list-group-horizontal flex-wrap">
-              <li><button className="nav-item navbar-toggler" onClick={() => {setPath("Profile"); setEnvironment({...environment, saved: false})}}>Profile</button></li>
-              <li><button className="nav-item navbar-toggler" onClick={() => {setPath("Interests"); setEnvironment({...environment, saved: false})}}>Interests</button></li>
-              <li><button className="nav-item navbar-toggler" onClick={() => {setPath("Events"); setEnvironment({...environment, saved: false})}}>Events</button></li>
-              <li><button className="nav-item navbar-toggler" onClick={() => {setPath("Discover"); setEnvironment({...environment, saved: false})}}>Discover</button></li>
-            </ul>
-          </div>
-        </nav>
-      </header>
-      <GetPage></GetPage>
-    </Context.Provider>
+  	<>
+    	<View className="App">
+      	<Card>
+        	<Heading level={1}>We now have Auth!</Heading>
+      	</Card>
+      	<Button onClick={signOut}>Sign Out</Button>
+    	</View>
+    	<Context.Provider value={{ environment, setEnvironment, path, setPath, user, setUser, hosted, setHosted, recommended, events, setEvents, newEvent, setNewEvent, interests, setInterests, topics, setTopics}}>
+      	<header>
+        	<nav className="navbar bg-primary">
+          	<div className="container-fluid">
+            	<a className="navbar-brand nav-title" href="/">IRL</a>
+            	<ul className="navbar-nav me-auto list-group-horizontal flex-wrap">
+              	<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Profile"); setEnvironment({...environment, saved: false})}}>Profile</button></li>
+              	<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Interests"); setEnvironment({...environment, saved: false})}}>Interests</button></li>
+              	<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Events"); setEnvironment({...environment, saved: false})}}>Events</button></li>
+              	<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Discover"); setEnvironment({...environment, saved: false})}}>Discover</button></li>
+            	</ul>
+          	</div>
+        	</nav>
+      	</header>
+      	<GetPage></GetPage>
+    	</Context.Provider>
+    </>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
