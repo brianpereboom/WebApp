@@ -1,0 +1,22 @@
+.container {
+    width: 400px;
+}
+
+.nested {
+    min-height: 100px;
+    margin: 5px;
+    padding: 10px;
+    border: 2px solid blue;
+    background-color: white;
+}
+
+.item {
+    cursor: pointer;
+    margin: 2px;
+    border: 1px solid black;
+    background-color: skyblue;
+}
+
+.gu-transit {
+    pointer-events: none;
+}

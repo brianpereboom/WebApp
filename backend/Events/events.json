@@ -1,0 +1,93 @@
+[
+    {
+        "host": 1,
+        "details": {
+            "id": 0,
+            "begin": "2023-03-25T06:30",
+            "end": "2023-03-25T09:30",
+            "location": "456 def",
+            "minAge": 20,
+            "maxAge": 50,
+            "topics": [
+                "swimming"
+            ]
+        },
+        "rsvps": [
+            6
+        ]
+    },
+    {
+        "host": 0,
+        "details": {
+            "id": 1,
+            "begin": "2023-03-28T15:30",
+            "end": "2023-03-25T16:30",
+            "location": "123 abc",
+            "minAge": 30,
+            "maxAge": 40,
+            "topics": [
+                "camping",
+                "swimming",
+                "scuba diving"
+            ]
+        },
+        "rsvps": [
+            1,
+            0
+        ]
+    },
+    {
+        "host": 5,
+        "details": {
+            "id": 3,
+            "begin": "2023-05-25T06:30",
+            "end": "2023-05-27T09:30",
+            "location": "Irvine Park",
+            "minAge": 20,
+            "maxAge": 50,
+            "topics": [
+                "camping"
+            ]
+        },
+        "rsvps": [
+            5
+        ]
+    },
+    {
+        "host": 5,
+        "details": {
+            "id": 4,
+            "begin": "2023-05-25T06:30",
+            "end": "2023-05-27T09:30",
+            "location": "Irvine Park",
+            "minAge": 20,
+            "maxAge": 50,
+            "topics": [
+                "music",
+                "composition"
+            ]
+        },
+        "rsvps": [
+            0
+        ]
+    },
+    {
+        "host": 5,
+        "details": {
+            "id": 5,
+            "begin": "2023-05-25T06:30",
+            "end": "2023-05-27T09:30",
+            "location": "Irvine Park",
+            "minAge": 20,
+            "maxAge": 50,
+            "topics": [
+                "music",
+                "piano"
+            ]
+        },
+        "rsvps": [
+            0,
+            5
+        ]
+    }
+]
