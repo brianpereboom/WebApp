@@ -4,9 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { Amplify } from 'aws-amplify';
-import config from './aws-exports';
-Amplify.configure(config);
+import { Amplify, API } from 'aws-amplify';Z
+import awsconfig from './aws-exports';
+
+Amplify.configure(awsconfig);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
