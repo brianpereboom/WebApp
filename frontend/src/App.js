@@ -136,9 +136,9 @@ function App({signOut}) {
               		<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Events"); setEnvironment({...environment, saved: false})}}>Events</button></li>
               		<li><button className="nav-item navbar-toggler" onClick={() => {setPath("Discover"); setEnvironment({...environment, saved: false})}}>Discover</button></li>
             		</ul>
-    				<View className="App">
-      					<Button onClick={signOut}>Sign Out</Button>
-    				</View>
+                <View className="App">
+                    <Button onClick={signOut}>Sign Out</Button>
+                </View>
           		</div>
         		</nav>
       		</header>
@@ -148,4 +148,4 @@ function App({signOut}) {
   );
 }
 
-export default withAuthenticator(App);
+export default App;
