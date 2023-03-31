@@ -14,7 +14,6 @@ app.use(cors());
 
 app.use(LoggerMiddleware);
 app.use(express.json());
-app.use("/", userRouter);
 app.use("/api/users", userRouter);
 app.use("/api/interests", interestRouter);
 app.use("/api/events", eventRouter);
