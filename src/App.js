@@ -8,7 +8,14 @@ import Discover from "./Discover";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
 
-function App() {
+import "@aws-amplify/ui-react/styles.css";
+import {
+  withAuthenticator,
+  Button,
+  View,
+} from "@aws-amplify/ui-react";
+
+function App({ signOut }) {
   const cachedEnvironment = JSON.parse(localStorage.getItem("environment")) || { saved: false };
   const [environment, setEnvironment] = useState(cachedEnvironment);
 
@@ -128,6 +135,9 @@ function App() {
               <li><button className="nav-item navbar-toggler" onClick={() => {setPath("Events"); setEnvironment({...environment, saved: false})}}>Events</button></li>
               <li><button className="nav-item navbar-toggler" onClick={() => {setPath("Discover"); setEnvironment({...environment, saved: false})}}>Discover</button></li>
             </ul>
+            <View className="App">
+              <Button onClick={signOut}>Sign Out</Button>
+            </View>
           </div>
         </nav>
       </header>
@@ -136,4 +146,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);
