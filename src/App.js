@@ -7,8 +7,6 @@ import Events from "./Events";
 import Discover from "./Discover";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
-import axios from "axios";
-import React from "react";
 
 import "@aws-amplify/ui-react/styles.css";
 import {
@@ -18,17 +16,6 @@ import {
 } from "@aws-amplify/ui-react";
 
 function App({ signOut }) {
-  const [post, setPost] = React.useState(null);
-
-  React.useEffect(() => {
-    const axiosPost = async () => {
-      const itemData = await axios.get("http://localhost:3000/items");
-      await setPost(itemData.data);
-    }
-    axiosPost();
-  }, []);
-  console.log(post);
-
   const cachedEnvironment = JSON.parse(localStorage.getItem("environment")) || { saved: false };
   const [environment, setEnvironment] = useState(cachedEnvironment);
 

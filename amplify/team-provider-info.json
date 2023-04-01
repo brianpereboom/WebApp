@@ -21,9 +21,6 @@
           "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
           "s3Key": "amplify-builds/webapp31afe428-417345412b5068454c66-build.zip"
         }
-      },
-      "api": {
-        "api2a79375f": {}
       }
     }
   }

@@ -1,20 +1,5 @@
 {
-  "api": {
-    "api2a79375f": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "webapp31afe428"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    }
-  },
+  "api": {},
   "auth": {
     "webapped0f0b15": {
       "customAuth": false,
