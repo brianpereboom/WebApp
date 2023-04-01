@@ -1,4 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
+  "api": {
+    "WebAppApi": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    }
+  },
   "auth": {
     "webapped0f0b15": {
       "AppClientID": "string",
@@ -8,6 +15,14 @@ export type AmplifyDependentResourcesAttributes = {
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
+    }
+  },
+  "function": {
+    "WebAppApiLambdaFunction": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "Name": "string",
+      "Region": "string"
     }
   }
 }
