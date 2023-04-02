@@ -65,7 +65,7 @@ function App({ signOut }) {
 
       const recommendedEvents = await Promise.all(interests && interests.map(async (int) => {
         const fetched = await fetch(`${apiUrl}/events/recommended/${int}`);
-        const fetchedJson = fetched.json();
+        const fetchedJson = await fetched.json();
         return fetchedJson;
       }));
       await setRecommended([...new Map(recommendedEvents.flat().map((item) => [item.details.id, item])).values()]);
