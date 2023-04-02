@@ -58,7 +58,7 @@
         },
         "UserPath": {
           "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
-          "s3Key": "amplify-builds/UserPath-4d6c337575792f653355-build.zip"
+          "s3Key": "amplify-builds/UserPath-652f6d41724e48776b6f-build.zip"
         },
         "EventEventPath": {
           "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
