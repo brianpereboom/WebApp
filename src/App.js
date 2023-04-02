@@ -15,7 +15,20 @@ import {
   View,
 } from "@aws-amplify/ui-react";
 
+const apiId = "1mcuhz7edg";
+const region = "us-east-1";
+const stageName = "staging";
+const apiUrl = `https://${apiId}.execute-api.${region}.amazonaws.com/${stageName}`;
+
 function App({ signOut }) {
+  useEffect(() => {
+    const fetchPost = async () => {
+      const data = await fetch(`${apiUrl}/item`);
+      console.log(data);
+    };
+    fetchPost();
+  }, []);
+
   const cachedEnvironment = JSON.parse(localStorage.getItem("environment")) || { saved: false };
   const [environment, setEnvironment] = useState(cachedEnvironment);
 
