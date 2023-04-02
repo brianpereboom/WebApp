@@ -23,7 +23,7 @@ const apiUrl = `https://${apiId}.execute-api.${region}.amazonaws.com/${stageName
 function App({ signOut }) {
   useEffect(() => {
     const fetchPost = async () => {
-      const data = await fetch(`${apiUrl}/`);
+      const data = await fetch(`${apiUrl}/items`);
       console.log(data);
     };
     fetchPost();
