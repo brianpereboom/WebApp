@@ -43,10 +43,10 @@ function App({ signOut }) {
   useEffect(() => {
     if (init.current === true) {
       const fetchPost = async () => {
-        const userData = await fetch(`http://localhost:3000/api/users/${userId}`);
+        const userData = await fetch(`${apiUrl}/users/${userId}`);
         const userJson = await userData.json();
         await setUser(userJson);
-        const hostedEvents = await fetch(`http://localhost:3000/api/events/user/${userJson.profile.id}`);
+        const hostedEvents = await fetch(`${apiUrl}/events/user/${userJson.profile.id}`);
         const hostedJson = await hostedEvents.json();
         await setHosted([...hostedJson]);
         await localStorage.setItem("init", false);
@@ -65,7 +65,7 @@ function App({ signOut }) {
       const interests = parseInterests(user.interests);
 
       const recommendedEvents = await Promise.all(interests && interests.map(async (int) => {
-        const fetched = await fetch(`http://localhost:3000/api/events/recommended/${int}`);
+        const fetched = await fetch(`${apiUrl}/events/recommended/${int}`);
         const fetchedJson = fetched.json();
         return fetchedJson;
       }));

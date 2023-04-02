@@ -1,5 +1,5 @@
 const saveUser = (userId, userData) => {
-    fetch(`http://localhost:3000/api/users/${userId}`, {
+    fetch(`${apiUrl}/users/${userId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
         body: JSON.stringify(userData)
@@ -7,7 +7,7 @@ const saveUser = (userId, userData) => {
 };
 
 const addUserInterest = (userId, interest) => {
-    fetch(`http://localhost:3000/api/interests/user/${userId}`, {
+    fetch(`${apiUrl}/interests/user/${userId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
         body: JSON.stringify({interest: interest})
@@ -15,7 +15,7 @@ const addUserInterest = (userId, interest) => {
 };
 
 const removeUserInterest = (userId, interest) => {
-    fetch(`http://localhost:3000/api/interests/user/${userId}`, {
+    fetch(`${apiUrl}/interests/user/${userId}`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
         body: JSON.stringify({interest: interest})
@@ -23,7 +23,7 @@ const removeUserInterest = (userId, interest) => {
 };
 
 const addEventInterest = (eventId, interest) => {
-    fetch(`http://localhost:3000/api/interests/event/${eventId}`, {
+    fetch(`${apiUrl}/interests/event/${eventId}`, {
         method: "PUT",
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
         body: JSON.stringify({interest: interest})
@@ -31,7 +31,7 @@ const addEventInterest = (eventId, interest) => {
 };
 
 const removeEventInterest = (eventId, interest) => {
-    fetch(`http://localhost:3000/api/interests/event/${eventId}`, {
+    fetch(`${apiUrl}/interests/event/${eventId}`, {
         method: "DELETE",
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
         body: JSON.stringify({interest: interest})
@@ -39,7 +39,7 @@ const removeEventInterest = (eventId, interest) => {
 };
 
 const saveEvent = (eventId, eventData) => {
-    fetch(`http://localhost:3000/api/events/event/${eventId}`, {
+    fetch(`${apiUrl}/events/event/${eventId}`, {
         method: "PUT",
         headers: { "Content-Type": 'application/json; charset=UTF-8' },
         body: JSON.stringify(eventData)
@@ -47,18 +47,18 @@ const saveEvent = (eventId, eventData) => {
 };
 
 const removeEvent = (eventId) => {
-    fetch(`http://localhost:3000/api/events/event/${eventId}`, {
+    fetch(`${apiUrl}/events/event/${eventId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json; charset=UTF-8"}
     });
 };
 
 const addRsvp = (eventId, userId) => {
-    fetch(`http://localhost:3000/api/events/rsvp/${eventId}/${userId}`, { method: "PUT" });
+    fetch(`${apiUrl}/events/rsvp/${eventId}/${userId}`, { method: "PUT" });
 };
 
 const removeRsvp = (eventId, userId) => {
-    fetch(`http://localhost:3000/api/events/rsvp/${eventId}/${userId}`, { method: "DELETE" });
+    fetch(`${apiUrl}/events/rsvp/${eventId}/${userId}`, { method: "DELETE" });
 };
 
 export { saveUser, addUserInterest, removeUserInterest, addEventInterest, removeEventInterest, saveEvent, removeEvent, addRsvp, removeRsvp };
