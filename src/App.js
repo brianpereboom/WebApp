@@ -5,6 +5,7 @@ import Profile from "./Profile";
 import Interests from "./Interests";
 import Events from "./Events";
 import Discover from "./Discover";
+import { apiUrl } from "./API";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
 
@@ -14,8 +15,6 @@ import {
   Button,
   View,
 } from "@aws-amplify/ui-react";
-
-const apiUrl = `https://kau6j8ocj9.execute-api.us-east-1.amazonaws.com/staging`;
 
 function App({ signOut }) {
   useEffect(() => {

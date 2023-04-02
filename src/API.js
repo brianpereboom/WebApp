@@ -1,3 +1,5 @@
+const apiUrl = `https://kau6j8ocj9.execute-api.us-east-1.amazonaws.com/staging`;
+
 const saveUser = (userId, userData) => {
     fetch(`${apiUrl}/users/${userId}`, {
         method: "PUT",
@@ -61,4 +63,4 @@ const removeRsvp = (eventId, userId) => {
     fetch(`${apiUrl}/events/rsvp/${eventId}/${userId}`, { method: "DELETE" });
 };
 
-export { saveUser, addUserInterest, removeUserInterest, addEventInterest, removeEventInterest, saveEvent, removeEvent, addRsvp, removeRsvp };
+export { apiUrl, saveUser, addUserInterest, removeUserInterest, addEventInterest, removeEventInterest, saveEvent, removeEvent, addRsvp, removeRsvp };
