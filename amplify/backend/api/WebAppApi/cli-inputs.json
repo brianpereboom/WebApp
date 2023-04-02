@@ -3,35 +3,35 @@
   "paths": {
     "/events/user/{userId}": {
       "name": "/events/user/{userId}",
-      "lambdaFunction": "EventsUserPath",
+      "lambdaFunction": "EventUserPath",
       "permissions": {
         "setting": "open"
       }
     },
     "/events/recommended/{interest}": {
       "name": "/events/recommended/{interest}",
-      "lambdaFunction": "EventsRecommendedPath",
+      "lambdaFunction": "EventRecommendedPath",
       "permissions": {
         "setting": "open"
       }
     },
     "/events/event/{eventId}": {
       "name": "/events/event/{eventId}",
-      "lambdaFunction": "EventsEventPath",
+      "lambdaFunction": "EventEventPath",
       "permissions": {
         "setting": "open"
       }
     },
     "/events/rsvp/{eventId}/{userId}": {
       "name": "/events/rsvp/{eventId}/{userId}",
-      "lambdaFunction": "EventsRsvpPath",
+      "lambdaFunction": "EventRsvpPath",
       "permissions": {
         "setting": "open"
       }
     },
     "/interests/{interest}": {
       "name": "/interests/{interest}",
-      "lambdaFunction": "InterestsPath",
+      "lambdaFunction": "InterestPath",
       "permissions": {
         "setting": "open"
       }
@@ -45,14 +45,14 @@
     },
     "/interests/event/{eventId}": {
       "name": "/interests/event/{eventId}",
-      "lambdaFunction": "InterestsEventPath",
+      "lambdaFunction": "InterestEventPath",
       "permissions": {
         "setting": "open"
       }
     },
     "/users/{userId}": {
       "name": "/users/{userId}",
-      "lambdaFunction": "UsersPath",
+      "lambdaFunction": "UserPath",
       "permissions": {
         "setting": "open"
       }

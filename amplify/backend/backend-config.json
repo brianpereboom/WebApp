@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventsUserPath"
+          "resourceName": "EventUserPath"
         },
         {
           "attributes": [
@@ -16,7 +16,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventsRecommendedPath"
+          "resourceName": "EventRecommendedPath"
         },
         {
           "attributes": [
@@ -24,7 +24,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventsEventPath"
+          "resourceName": "EventEventPath"
         },
         {
           "attributes": [
@@ -32,7 +32,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventsRsvpPath"
+          "resourceName": "EventRsvpPath"
         },
         {
           "attributes": [
@@ -40,7 +40,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "InterestsPath"
+          "resourceName": "InterestPath"
         },
         {
           "attributes": [
@@ -56,7 +56,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "InterestsEventPath"
+          "resourceName": "InterestEventPath"
         },
         {
           "attributes": [
@@ -64,7 +64,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "UsersPath"
+          "resourceName": "UserPath"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -98,32 +98,32 @@
     }
   },
   "function": {
-    "EventsEventPath": {
+    "EventEventPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "EventsRecommendedPath": {
+    "EventRecommendedPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "EventsRsvpPath": {
+    "EventRsvpPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "EventsUserPath": {
+    "EventUserPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "InterestsEventPath": {
+    "InterestEventPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "InterestsPath": {
+    "InterestPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -133,13 +133,77 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "UsersPath": {
+    "UserPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
+    "AMPLIFY_function_EventEventPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventEventPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRecommendedPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRecommendedPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRecommendedPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRecommendedPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRsvpPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRsvpPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRsvpPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRsvpPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventUserPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventUserPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventUserPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventUserPath"
+        }
+      ]
+    },
     "AMPLIFY_function_EventsEventPath_deploymentBucketName": {
       "usedBy": [
         {
@@ -204,6 +268,38 @@
         }
       ]
     },
+    "AMPLIFY_function_InterestEventPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestEventPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestPath"
+        }
+      ]
+    },
     "AMPLIFY_function_InterestsEventPath_deploymentBucketName": {
       "usedBy": [
         {
@@ -256,11 +352,27 @@
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "UsersPath"
+          "resourceName": "UserPath"
         }
       ]
     },
     "AMPLIFY_function_UserPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_UsersPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UsersPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_UsersPath_s3Key": {
       "usedBy": [
         {
           "category": "function",

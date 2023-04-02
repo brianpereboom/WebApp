@@ -55,6 +55,34 @@
         "UsersPath": {
           "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
           "s3Key": "amplify-builds/UsersPath-4d6c337575792f653355-build.zip"
+        },
+        "UserPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/UserPath-4d6c337575792f653355-build.zip"
+        },
+        "EventEventPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventEventPath-56326f63356d56596d65-build.zip"
+        },
+        "EventRecommendedPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventRecommendedPath-363670614c5373627268-build.zip"
+        },
+        "EventRsvpPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventRsvpPath-497a4864473864556865-build.zip"
+        },
+        "EventUserPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventUserPath-573268364b2f756e2b43-build.zip"
+        },
+        "InterestEventPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/InterestEventPath-6546325252476b735668-build.zip"
+        },
+        "InterestPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/InterestPath-5569466e657a7a513964-build.zip"
         }
       },
       "api": {

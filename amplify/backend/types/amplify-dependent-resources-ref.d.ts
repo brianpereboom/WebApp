@@ -18,42 +18,42 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
-    "EventsEventPath": {
+    "EventEventPath": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "EventsRecommendedPath": {
+    "EventRecommendedPath": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "EventsRsvpPath": {
+    "EventRsvpPath": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "EventsUserPath": {
+    "EventUserPath": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "InterestsEventPath": {
+    "InterestEventPath": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
       "Name": "string",
       "Region": "string"
     },
-    "InterestsPath": {
+    "InterestPath": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
@@ -67,7 +67,7 @@ export type AmplifyDependentResourcesAttributes = {
       "Name": "string",
       "Region": "string"
     },
-    "UsersPath": {
+    "UserPath": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",
