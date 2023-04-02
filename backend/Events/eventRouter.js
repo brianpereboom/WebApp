@@ -29,7 +29,7 @@ routes.get("/recommended/:interest", (req, res) => {
     }
 });
 
-routes.put("/event/:eventId", (req, res) => {
+routes.put("/:eventId", (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
         const eventData = req.body;
@@ -43,7 +43,7 @@ routes.put("/event/:eventId", (req, res) => {
     }
 });
 
-routes.delete("/event/:eventId", (req, res) => {
+routes.delete("/:eventId", (req, res) => {
     try {
         const eventId = parseInt(req.params.eventId);
         eventsController.removeHostedEvent(eventId, (err, results) => {

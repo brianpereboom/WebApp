@@ -41,7 +41,7 @@ const removeEventInterest = (eventId, interest) => {
 };
 
 const saveEvent = (eventId, eventData) => {
-    fetch(`${apiUrl}/events/event/${eventId}`, {
+    fetch(`${apiUrl}/events/${eventId}`, {
         method: "PUT",
         headers: { "Content-Type": 'application/json; charset=UTF-8' },
         body: JSON.stringify(eventData)
@@ -49,7 +49,7 @@ const saveEvent = (eventId, eventData) => {
 };
 
 const removeEvent = (eventId) => {
-    fetch(`${apiUrl}/events/event/${eventId}`, {
+    fetch(`${apiUrl}/events/${eventId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json; charset=UTF-8"}
     });
