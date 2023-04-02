@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "paths": {
+    "/events/user/{userId}": {
+      "name": "/events/user/{userId}",
+      "lambdaFunction": "EventUserPath",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/events/recommended/{interest}": {
+      "name": "/events/recommended/{interest}",
+      "lambdaFunction": "EventRecommendedPath",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/events/event/{eventId}": {
+      "name": "/events/event/{eventId}",
+      "lambdaFunction": "EventEventPath",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/events/rsvp/{eventId}/{userId}": {
+      "name": "/events/rsvp/{eventId}/{userId}",
+      "lambdaFunction": "EventRsvpPath",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/interests/{interest}": {
+      "name": "/interests/{interest}",
+      "lambdaFunction": "InterestPath",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/interests/user/{userId}": {
+      "name": "/interests/user/{userId}",
+      "lambdaFunction": "InterestsUserPath",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/interests/event/{eventId}": {
+      "name": "/interests/event/{eventId}",
+      "lambdaFunction": "InterestEventPath",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/users/{userId}": {
+      "name": "/users/{userId}",
+      "lambdaFunction": "UserPath",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -15,19 +15,16 @@ import {
   View,
 } from "@aws-amplify/ui-react";
 
-/*const apiId = "1mcuhz7edg";
-const region = "us-east-1";
-const stageName = "staging";
-const apiUrl = `https://${apiId}.execute-api.${region}.amazonaws.com/${stageName}`;*/
+const apiUrl = `https://kau6j8ocj9.execute-api.us-east-1.amazonaws.com/staging`;
 
 function App({ signOut }) {
-  /*useEffect(() => {
+  useEffect(() => {
     const fetchPost = async () => {
-      const data = await fetch(`${apiUrl}/items`);
+      const data = await fetch(`${apiUrl}/users/0`);
       console.log(data);
     };
     fetchPost();
-  }, []);*/
+  }, []);
   
   const cachedEnvironment = JSON.parse(localStorage.getItem("environment")) || { saved: false };
   const [environment, setEnvironment] = useState(cachedEnvironment);

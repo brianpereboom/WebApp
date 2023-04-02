@@ -23,7 +23,42 @@
         "webappf5289166": {},
         "webapp1aad5ca6": {},
         "webappbc4ab57f": {},
-        "webapp7bf09c25": {}
+        "webapp7bf09c25": {},
+        "EventUserPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventUserPath-573268364b2f756e2b43-build.zip"
+        },
+        "EventRecommendedPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventRecommendedPath-363670614c5373627268-build.zip"
+        },
+        "EventEventPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventEventPath-56326f63356d56596d65-build.zip"
+        },
+        "EventRsvpPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventRsvpPath-497a4864473864556865-build.zip"
+        },
+        "InterestPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/InterestPath-5569466e657a7a513964-build.zip"
+        },
+        "InterestsUserPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/InterestsUserPath-57563849354b424c3162-build.zip"
+        },
+        "InterestEventPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/InterestEventPath-6546325252476b735668-build.zip"
+        },
+        "UserPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/UserPath-4d6c337575792f653355-build.zip"
+        }
+      },
+      "api": {
+        "WebAppApi": {}
       }
     }
   }

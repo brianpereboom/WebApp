@@ -1,4 +1,76 @@
 {
+  "api": {
+    "WebAppApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "EventUserPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "EventRecommendedPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "EventEventPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "EventRsvpPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "InterestPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "InterestsUserPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "InterestEventPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "UserPath"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "webapped0f0b15": {
       "customAuth": false,
@@ -23,6 +95,178 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "EventEventPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "EventRecommendedPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "EventRsvpPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "EventUserPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "InterestEventPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "InterestPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "InterestsUserPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "UserPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_EventEventPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventEventPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRecommendedPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRecommendedPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRecommendedPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRecommendedPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRsvpPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRsvpPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventRsvpPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventRsvpPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventUserPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventUserPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventUserPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventUserPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestEventPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestEventPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestEventPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestsUserPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestsUserPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestsUserPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestsUserPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_UserPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UserPath"
+        }
+      ]
     }
   }
 }
