@@ -18,7 +18,7 @@ import {
 const apiId = "1mcuhz7edg";
 const region = "us-east-1";
 const stageName = "staging";
-const apiUrl = `https://${apiId}.execute-api.${region}.amazonaws.com/${stageName}/item`;
+const apiUrl = `https://${apiId}.execute-api.${region}.amazonaws.com/${stageName}`;
 
 function App({ signOut }) {
   useEffect(() => {
