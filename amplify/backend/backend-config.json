@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventUserPath"
+          "resourceName": "EventsUserPath"
         },
         {
           "attributes": [
@@ -16,7 +16,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventRecommendedPath"
+          "resourceName": "EventsRecommendedPath"
         },
         {
           "attributes": [
@@ -24,7 +24,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventEventPath"
+          "resourceName": "EventsEventPath"
         },
         {
           "attributes": [
@@ -32,7 +32,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "EventRsvpPath"
+          "resourceName": "EventsRsvpPath"
         },
         {
           "attributes": [
@@ -40,7 +40,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "InterestPath"
+          "resourceName": "InterestsPath"
         },
         {
           "attributes": [
@@ -56,7 +56,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "InterestEventPath"
+          "resourceName": "InterestsEventPath"
         },
         {
           "attributes": [
@@ -64,7 +64,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "UserPath"
+          "resourceName": "UsersPath"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -98,32 +98,32 @@
     }
   },
   "function": {
-    "EventEventPath": {
+    "EventsEventPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "EventRecommendedPath": {
+    "EventsRecommendedPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "EventRsvpPath": {
+    "EventsRsvpPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "EventUserPath": {
+    "EventsUserPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "InterestEventPath": {
+    "InterestsEventPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "InterestPath": {
+    "InterestsPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -133,106 +133,106 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "UserPath": {
+    "UsersPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
   },
   "parameters": {
-    "AMPLIFY_function_EventEventPath_deploymentBucketName": {
+    "AMPLIFY_function_EventsEventPath_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventEventPath"
+          "resourceName": "EventsEventPath"
         }
       ]
     },
-    "AMPLIFY_function_EventEventPath_s3Key": {
+    "AMPLIFY_function_EventsEventPath_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventEventPath"
+          "resourceName": "EventsEventPath"
         }
       ]
     },
-    "AMPLIFY_function_EventRecommendedPath_deploymentBucketName": {
+    "AMPLIFY_function_EventsRecommendedPath_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventRecommendedPath"
+          "resourceName": "EventsRecommendedPath"
         }
       ]
     },
-    "AMPLIFY_function_EventRecommendedPath_s3Key": {
+    "AMPLIFY_function_EventsRecommendedPath_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventRecommendedPath"
+          "resourceName": "EventsRecommendedPath"
         }
       ]
     },
-    "AMPLIFY_function_EventRsvpPath_deploymentBucketName": {
+    "AMPLIFY_function_EventsRsvpPath_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventRsvpPath"
+          "resourceName": "EventsRsvpPath"
         }
       ]
     },
-    "AMPLIFY_function_EventRsvpPath_s3Key": {
+    "AMPLIFY_function_EventsRsvpPath_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventRsvpPath"
+          "resourceName": "EventsRsvpPath"
         }
       ]
     },
-    "AMPLIFY_function_EventUserPath_deploymentBucketName": {
+    "AMPLIFY_function_EventsUserPath_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventUserPath"
+          "resourceName": "EventsUserPath"
         }
       ]
     },
-    "AMPLIFY_function_EventUserPath_s3Key": {
+    "AMPLIFY_function_EventsUserPath_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "EventUserPath"
+          "resourceName": "EventsUserPath"
         }
       ]
     },
-    "AMPLIFY_function_InterestEventPath_deploymentBucketName": {
+    "AMPLIFY_function_InterestsEventPath_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "InterestEventPath"
+          "resourceName": "InterestsEventPath"
         }
       ]
     },
-    "AMPLIFY_function_InterestEventPath_s3Key": {
+    "AMPLIFY_function_InterestsEventPath_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "InterestEventPath"
+          "resourceName": "InterestsEventPath"
         }
       ]
     },
-    "AMPLIFY_function_InterestPath_deploymentBucketName": {
+    "AMPLIFY_function_InterestsPath_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "InterestPath"
+          "resourceName": "InterestsPath"
         }
       ]
     },
-    "AMPLIFY_function_InterestPath_s3Key": {
+    "AMPLIFY_function_InterestsPath_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "InterestPath"
+          "resourceName": "InterestsPath"
         }
       ]
     },
@@ -256,7 +256,7 @@
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "UserPath"
+          "resourceName": "UsersPath"
         }
       ]
     },
@@ -264,7 +264,7 @@
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "UserPath"
+          "resourceName": "UsersPath"
         }
       ]
     }

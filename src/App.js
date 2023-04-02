@@ -21,7 +21,7 @@ function App({ signOut }) {
   useEffect(() => {
     const fetchPost = async () => {
       const data = await fetch(`${apiUrl}/users/0`);
-      console.log(data);
+      console.log(await data.json());
     };
     fetchPost();
   }, []);
