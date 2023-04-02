@@ -17,14 +17,6 @@ import {
 } from "@aws-amplify/ui-react";
 
 function App({ signOut }) {
-  useEffect(() => {
-    const fetchPost = async () => {
-      const data = await fetch(`${apiUrl}/users/0`);
-      console.log(await data.json());
-    };
-    fetchPost();
-  }, []);
-  
   const cachedEnvironment = JSON.parse(localStorage.getItem("environment")) || { saved: false };
   const [environment, setEnvironment] = useState(cachedEnvironment);
 
