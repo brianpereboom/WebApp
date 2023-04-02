@@ -49,7 +49,7 @@ function App({ signOut }) {
         const userData = await fetch(`http://localhost:3000/api/users/${userId}`);
         const userJson = await userData.json();
         await setUser(userJson);
-        const hostedEvents = await fetch(`http://localhost:3000/api/events/${userJson.profile.id}`);
+        const hostedEvents = await fetch(`http://localhost:3000/api/events/user/${userJson.profile.id}`);
         const hostedJson = await hostedEvents.json();
         await setHosted([...hostedJson]);
         await localStorage.setItem("init", false);
