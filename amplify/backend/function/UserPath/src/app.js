@@ -32,7 +32,52 @@ app.use(function(req, res, next) {
 
 app.get('/users/:userId', function(req, res) {
   // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  res.json(
+    {
+        "profile": {
+            "id": 5,
+            "name": "Brian",
+            "birthdate": "1991-03-12",
+            "address": "12345 Avenue Street"
+        },
+        "interests": [
+            {
+                "taskName": "music",
+                "subTasks": [
+                    {
+                        "taskName": "composition",
+                        "subTasks": []
+                    },
+                    {
+                        "taskName": "piano",
+                        "subTasks": []
+                    }
+                ]
+            },
+            {
+                "taskName": "stocks",
+                "subTasks": []
+            },
+            {
+                "taskName": "programming",
+                "subTasks": []
+            },
+            {
+                "taskName": "camping",
+                "subTasks": []
+            }
+        ],
+        "hosted": [
+            0,
+            1,
+            2,
+            3
+        ],
+        "rsvp": [
+            5
+        ]
+    }
+  );
 });
 
 app.get('/users/:userId/*', function(req, res) {
