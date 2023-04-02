@@ -1,20 +1,4 @@
 {
-  "api": {
-    "WebAppApi": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "WebAppApiLambdaFunction"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    }
-  },
   "auth": {
     "webapped0f0b15": {
       "customAuth": false,
@@ -39,31 +23,6 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
-    }
-  },
-  "function": {
-    "WebAppApiLambdaFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "parameters": {
-    "AMPLIFY_function_WebAppApiLambdaFunction_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "WebAppApiLambdaFunction"
-        }
-      ]
-    },
-    "AMPLIFY_function_WebAppApiLambdaFunction_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "WebAppApiLambdaFunction"
-        }
-      ]
     }
   }
 }
