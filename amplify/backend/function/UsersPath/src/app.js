@@ -36,7 +36,7 @@ app.use(function(req, res, next) {
 
 app.get('/users/:userId', function(req, res) {
     const params = {
-      TableName : 'Users',
+      TableName : 'Users-staging',
       /* Item properties will depend on your application concerns */
       Key: {
         id: 'bpereboom'
