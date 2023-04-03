@@ -34,11 +34,6 @@ app.use(function(req, res, next) {
   next()
 });
 
-
-/**********************
- * Example get method *
- **********************/
-
 app.get('/users/:userId', function(req, res) {
   // Add your code here
   res.json(
