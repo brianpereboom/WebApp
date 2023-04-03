@@ -1,5 +1,36 @@
 {
-  "api": {},
+  "api": {
+    "WebAppApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "UsersPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "InterestsPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "EventsPath"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "webapped0f0b15": {
       "customAuth": false,
@@ -26,5 +57,71 @@
       "service": "Cognito"
     }
   },
-  "function": {}
+  "function": {
+    "EventsPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "InterestsPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "UsersPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_EventsPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventsPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_EventsPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EventsPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestsPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestsPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestsPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestsPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_UsersPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UsersPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_UsersPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UsersPath"
+        }
+      ]
+    }
+  }
 }

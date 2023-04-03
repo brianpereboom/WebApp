@@ -14,6 +14,23 @@
     "categories": {
       "auth": {
         "webapped0f0b15": {}
+      },
+      "function": {
+        "UsersPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/UsersPath-6e7655386f374a68667a-build.zip"
+        },
+        "InterestsPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/InterestsPath-2f4b38646a6473557046-build.zip"
+        },
+        "EventsPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/EventsPath-614437624c3757645948-build.zip"
+        }
+      },
+      "api": {
+        "WebAppApi": {}
       }
     }
   }

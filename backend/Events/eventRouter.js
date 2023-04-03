@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const express = require('express');
 const routes = express.Router();
-const eventsController = require('./eventsController');
+const eventsController = require('./eventController');
 
 routes.get("/user/:userId", (req, res) => {
     try {
