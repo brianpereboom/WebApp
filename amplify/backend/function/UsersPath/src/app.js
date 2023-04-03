@@ -19,6 +19,9 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient();
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -87,8 +90,64 @@ app.get('/users/:userId', function(req, res) {
 });
 
 app.put('/users/:userId', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
+    const params = {
+      TableName : 'Users-staging',
+      Item: 
+      {
+          "profile": {
+              "id": 5,
+              "name": "Brian",
+              "birthdate": "1991-03-12",
+              "address": "12345 Avenue Street"
+          },
+          "interests": [
+              {
+                  "taskName": "music",
+                  "subTasks": [
+                      {
+                          "taskName": "composition",
+                          "subTasks": []
+                      },
+                      {
+                          "taskName": "piano",
+                          "subTasks": []
+                      }
+                  ]
+              },
+              {
+                  "taskName": "stocks",
+                  "subTasks": []
+              },
+              {
+                  "taskName": "programming",
+                  "subTasks": []
+              },
+              {
+                  "taskName": "camping",
+                  "subTasks": []
+              }
+          ],
+          "hosted": [
+              0,
+              1,
+              2,
+              3
+          ],
+          "rsvp": [
+              5
+          ]
+      }
+    }
+    
+    const putPort = async (event) => {
+      try {
+        await docClient.put(params).promise();
+        return { body: 'Successfully created item!' }
+      } catch (err) {
+        return { error: err }
+      }
+    };
+    putPort();
 });
 
 app.listen(3000, function() {
