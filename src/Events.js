@@ -97,7 +97,6 @@ class Events extends PureComponent{
                             const cpy = {...newEvent, details: {...newEvent.details, id: id}};
                             if ("topics" in cpy.details) {
                                 const addedTopics = [...cpy.details.topics];
-                                console.log(addedTopics);
                                 addedTopics.map((t) => addEventInterest(id, t));
                             }
                             setUser({...user, hosted: [...user.hosted, id: id]});
