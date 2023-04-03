@@ -70,6 +70,17 @@
     },
     "UsersPath": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "WebAppDynamoDB"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     }
