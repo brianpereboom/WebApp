@@ -91,7 +91,7 @@ app.put('/users/:userId', function(req, res) {
       Item: 
       {
           "profile": {
-              "id": 5,
+              "id": parseInt(req.params.userId),
               "name": "Brian",
               "birthdate": "1991-03-12",
               "address": "12345 Avenue Street"
@@ -133,17 +133,14 @@ app.put('/users/:userId', function(req, res) {
               5
           ]
       }
-    }
-    
-    const putPort = async (event) => {
-      try {
-        await docClient.put(params).promise();
-        return { body: 'Successfully created item!' }
-      } catch (err) {
-        return { error: err }
-      }
     };
-    putPort();
+    
+    try {
+        await docClient.put(params).promise();
+        return { body: 'Successfully created item!' };
+    } catch (err) {
+        return { error: err };
+    }
 });
 
 app.listen(3000, function() {
