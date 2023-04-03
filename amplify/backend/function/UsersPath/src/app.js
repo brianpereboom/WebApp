@@ -35,54 +35,22 @@ app.use(function(req, res, next) {
 });
 
 app.get('/users/:userId', function(req, res) {
-  // Add your code here
-  res.json(
-    {
-        id: "bpereboom",
-        profile: {
-            id: 5,
-            name: "Brian",
-            birthdate: "1991-03-12",
-            address: "12345 Avenue Street"
-        },
-        interests: [
-            {
-                taskName: "music",
-                subTasks: [
-                    {
-                        taskName: "composition",
-                        subTasks: []
-                    },
-                    {
-                        taskName: "piano",
-                        subTasks: []
-                    }
-                ]
-            },
-            {
-                taskName: "stocks",
-                subTasks: []
-            },
-            {
-                taskName: "programming",
-                subTasks: []
-            },
-            {
-                taskName: "camping",
-                subTasks: []
-            }
-        ],
-        hosted: [
-            0,
-            1,
-            2,
-            3
-        ],
-        rsvp: [
-            5
-        ]
+    const params = {
+      TableName : 'Users',
+      /* Item properties will depend on your application concerns */
+      Key: {
+        id: 'bpereboom'
+      }
     }
-  );
+    
+    exports.handler = async (event, context) => {
+      try {
+        const data = await docClient.get(params).promise()
+        return { body: JSON.stringify(data) }
+      } catch (err) {
+        return { error: err }
+      }
+    }
 });
 
 app.put('/users/:userId', function(req, res) {
