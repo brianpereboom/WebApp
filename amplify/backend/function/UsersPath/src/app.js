@@ -43,6 +43,7 @@ app.get('/users/:userId', function(req, res) {
   // Add your code here
   res.json(
     {
+        "id": "bpereboom",
         "profile": {
             "id": 5,
             "name": "Brian",
