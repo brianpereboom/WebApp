@@ -34,8 +34,10 @@ function App({ signOut }) {
   useEffect(() => {
     if (init.current === true) {
       const fetchPost = async () => {
+        console.log("Initializing...");
         const userData = await fetch(`${apiUrl}/users/${userId}`);
         const userJson = await userData.json();
+        console.log(userJson);
         await setUser(userJson);
         const hostedEvents = await fetch(`${apiUrl}/events/user/${userJson.profile.id}`);
         const hostedJson = await hostedEvents.json();
