@@ -20,7 +20,7 @@ const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 
 const AWS = require('aws-sdk');
-const docClient = new AWS.DynamoDB.DocumentClient();
+const documentClient = new AWS.DynamoDB.DocumentClient();
 
 // declare a new express app
 const app = express()
@@ -36,21 +36,18 @@ app.use(function(req, res, next) {
 
 app.get('/users/:userId', function(req, res) {
     const params = {
-      TableName : 'Users-staging',
-      /* Item properties will depend on your application concerns */
-      Key: {
-        id: 'bpereboom'
-      }
-    }
+        TableName : 'Users-staging',
+        Key: {
+            id: 'bpereboom'
+        }
+    };
     
-    exports.handler = async (event, context) => {
-      try {
-        const data = await docClient.get(params).promise()
-        return { body: JSON.stringify(data) }
-      } catch (err) {
-        return { error: err }
-      }
-    }
+    documentClient.get(params, function(err, data) {
+        if (err)
+            console.log(err);
+        else
+            console.log(data);
+    });
 });
 
 app.put('/users/:userId', function(req, res) {
