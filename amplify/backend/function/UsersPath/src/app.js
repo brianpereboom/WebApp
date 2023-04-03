@@ -38,47 +38,47 @@ app.get('/users/:userId', function(req, res) {
   // Add your code here
   res.json(
     {
-        "id": "bpereboom",
-        "profile": {
-            "id": 5,
-            "name": "Brian",
-            "birthdate": "1991-03-12",
-            "address": "12345 Avenue Street"
+        id: "bpereboom",
+        profile: {
+            id: 5,
+            name: "Brian",
+            birthdate: "1991-03-12",
+            address: "12345 Avenue Street"
         },
-        "interests": [
+        interests: [
             {
-                "taskName": "music",
-                "subTasks": [
+                taskName: "music",
+                subTasks: [
                     {
-                        "taskName": "composition",
-                        "subTasks": []
+                        taskName: "composition",
+                        subTasks: []
                     },
                     {
-                        "taskName": "piano",
-                        "subTasks": []
+                        taskName: "piano",
+                        subTasks: []
                     }
                 ]
             },
             {
-                "taskName": "stocks",
-                "subTasks": []
+                taskName: "stocks",
+                subTasks: []
             },
             {
-                "taskName": "programming",
-                "subTasks": []
+                taskName: "programming",
+                subTasks: []
             },
             {
-                "taskName": "camping",
-                "subTasks": []
+                taskName: "camping",
+                subTasks: []
             }
         ],
-        "hosted": [
+        hosted: [
             0,
             1,
             2,
             3
         ],
-        "rsvp": [
+        rsvp: [
             5
         ]
     }
@@ -90,57 +90,60 @@ app.put('/users/:userId', function(req, res) {
       TableName : 'Users',
       Item: 
       {
-          "profile": {
-              "id": parseInt(req.params.userId),
-              "name": "Brian",
-              "birthdate": "1991-03-12",
-              "address": "12345 Avenue Street"
+          profile: {
+              id: parseInt(req.params.userId),
+              name: "Brian",
+              birthdate: "1991-03-12",
+              address: "12345 Avenue Street"
           },
-          "interests": [
+          interests: [
               {
-                  "taskName": "music",
-                  "subTasks": [
+                  taskName: "music",
+                  subTasks: [
                       {
-                          "taskName": "composition",
-                          "subTasks": []
+                          taskName: "composition",
+                          subTasks: []
                       },
                       {
-                          "taskName": "piano",
-                          "subTasks": []
+                          taskName: "piano",
+                          subTasks: []
                       }
                   ]
               },
               {
-                  "taskName": "stocks",
-                  "subTasks": []
+                  taskName: "stocks",
+                  subTasks: []
               },
               {
-                  "taskName": "programming",
-                  "subTasks": []
+                  taskName: "programming",
+                  subTasks: []
               },
               {
-                  "taskName": "camping",
-                  "subTasks": []
+                  taskName: "camping",
+                  subTasks: []
               }
           ],
-          "hosted": [
+          hosted: [
               0,
               1,
               2,
               3
           ],
-          "rsvp": [
+          rsvp: [
               5
           ]
       }
     };
     
-    try {
+    const putPort = async (event) => {
+      try {
         await docClient.put(params).promise();
         return { body: 'Successfully created item!' };
-    } catch (err) {
+      } catch (err) {
         return { error: err };
-    }
+      }
+    };
+    putPort();
 });
 
 app.listen(3000, function() {
