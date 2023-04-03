@@ -87,7 +87,7 @@ app.get('/users/:userId', function(req, res) {
 
 app.put('/users/:userId', function(req, res) {
     const params = {
-      TableName : 'Users-staging',
+      TableName : 'Users',
       Item: 
       {
           "profile": {
