@@ -90,48 +90,49 @@ app.put('/users/:userId', function(req, res) {
       TableName : 'Users',
       Item: 
       {
-          profile: {
-              id: parseInt(req.params.userId),
-              name: "Brian",
-              birthdate: "1991-03-12",
-              address: "12345 Avenue Street"
-          },
-          interests: [
-              {
-                  taskName: "music",
-                  subTasks: [
-                      {
-                          taskName: "composition",
-                          subTasks: []
-                      },
-                      {
-                          taskName: "piano",
-                          subTasks: []
-                      }
-                  ]
-              },
-              {
-                  taskName: "stocks",
-                  subTasks: []
-              },
-              {
-                  taskName: "programming",
-                  subTasks: []
-              },
-              {
-                  taskName: "camping",
-                  subTasks: []
-              }
-          ],
-          hosted: [
-              0,
-              1,
-              2,
-              3
-          ],
-          rsvp: [
-              5
-          ]
+        id: "bpereboom",
+        profile: {
+            id: parseInt(req.params.userId),
+            name: "Brian",
+            birthdate: "1991-03-12",
+            address: "12345 Avenue Street"
+        },
+        interests: [
+            {
+                taskName: "music",
+                subTasks: [
+                    {
+                        taskName: "composition",
+                        subTasks: []
+                    },
+                    {
+                        taskName: "piano",
+                        subTasks: []
+                    }
+                ]
+            },
+            {
+                taskName: "stocks",
+                subTasks: []
+            },
+            {
+                taskName: "programming",
+                subTasks: []
+            },
+            {
+                taskName: "camping",
+                subTasks: []
+            }
+        ],
+        hosted: [
+            0,
+            1,
+            2,
+            3
+        ],
+        rsvp: [
+            5
+        ]
       }
     };
     
