@@ -1,0 +1,10 @@
+{
+  "resourceName": "WebAppDynamoDB",
+  "tableName": "Users",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
