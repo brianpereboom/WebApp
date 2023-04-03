@@ -9,6 +9,14 @@
           ],
           "category": "function",
           "resourceName": "UsersPath"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "InterestsPath"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -42,6 +50,11 @@
     }
   },
   "function": {
+    "InterestsPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "UsersPath": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -49,6 +62,22 @@
     }
   },
   "parameters": {
+    "AMPLIFY_function_InterestsPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestsPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_InterestsPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "InterestsPath"
+        }
+      ]
+    },
     "AMPLIFY_function_UsersPath_deploymentBucketName": {
       "usedBy": [
         {

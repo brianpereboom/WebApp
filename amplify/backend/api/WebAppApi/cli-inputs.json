@@ -7,6 +7,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/interests": {
+      "name": "/interests",
+      "lambdaFunction": "InterestsPath",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }
