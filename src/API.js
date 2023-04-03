@@ -1,4 +1,4 @@
-const apiUrl = `https://kau6j8ocj9.execute-api.us-east-1.amazonaws.com/staging`;
+const apiUrl = `https://hpfoa7r5v7.execute-api.us-east-1.amazonaws.com/staging`;
 
 const saveUser = (userId, userData) => {
     fetch(`${apiUrl}/users/${userId}`, {

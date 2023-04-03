@@ -14,6 +14,15 @@
     "categories": {
       "auth": {
         "webapped0f0b15": {}
+      },
+      "function": {
+        "UsersPath": {
+          "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
+          "s3Key": "amplify-builds/UsersPath-58303048467064486749-build.zip"
+        }
+      },
+      "api": {
+        "WebAppApi": {}
       }
     }
   }

@@ -1,5 +1,20 @@
 {
-  "api": {},
+  "api": {
+    "WebAppApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "UsersPath"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "webapped0f0b15": {
       "customAuth": false,
@@ -24,6 +39,31 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "UsersPath": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_UsersPath_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UsersPath"
+        }
+      ]
+    },
+    "AMPLIFY_function_UsersPath_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "UsersPath"
+        }
+      ]
     }
   }
 }
