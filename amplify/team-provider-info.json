@@ -31,6 +31,9 @@
       },
       "api": {
         "WebAppApi": {}
+      },
+      "storage": {
+        "WebAppDynamoDB": {}
       }
     }
   }

@@ -123,5 +123,11 @@
         }
       ]
     }
+  },
+  "storage": {
+    "WebAppDynamoDB": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    }
   }
 }

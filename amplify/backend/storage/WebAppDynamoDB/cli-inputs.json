@@ -1,0 +1,39 @@
+{
+  "resourceName": "WebAppDynamoDB",
+  "tableName": "WebAppDynamoDB",
+  "partitionKey": {
+    "fieldName": "user",
+    "fieldType": "string"
+  },
+  "gsi": [
+    {
+      "name": "profile",
+      "partitionKey": {
+        "fieldName": "user",
+        "fieldType": "string"
+      }
+    },
+    {
+      "name": "interests",
+      "partitionKey": {
+        "fieldName": "user",
+        "fieldType": "string"
+      }
+    },
+    {
+      "name": "hosted",
+      "partitionKey": {
+        "fieldName": "user",
+        "fieldType": "string"
+      }
+    },
+    {
+      "name": "rsvp",
+      "partitionKey": {
+        "fieldName": "user",
+        "fieldType": "string"
+      }
+    }
+  ],
+  "triggerFunctions": []
+}
