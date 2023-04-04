@@ -8,7 +8,7 @@ const getInterestedIds = function(interest, done) {
         const fetchedInterest = interestData.find((int) => int.interest == interest);
         if (fetchedInterest === undefined)
             return done("Interest not found");
-        return done(undefined, fetchedInterest.users);
+        return done(undefined, fetchedInterest.events);
     });
 };
 

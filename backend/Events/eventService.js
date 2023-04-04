@@ -4,8 +4,8 @@ const getHostedEvents = function(eventId, done) {
     eventDAO.getHostedEvents(eventId, done);
 };
 
-const getRecommendedEvents = function(interest, done) {
-    eventDAO.getRecommendedEvents(interest, done);
+const getEvent = function(eventId, done) {
+    eventDAO.getEvent(eventId, done);
 };
 
 const updateHostedEvent = function(eventId, eventData, done) {
@@ -24,4 +24,4 @@ const removeRsvp = function(eventId, userId, done) {
     eventDAO.removeRsvp(eventId, userId, done);
 };
 
-module.exports = { getHostedEvents, getRecommendedEvents, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };
+module.exports = { getHostedEvents, getEvent, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };

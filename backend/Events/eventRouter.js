@@ -16,7 +16,20 @@ routes.get("/user/:userId", (req, res) => {
     }
 });
 
-routes.get("/recommended/:interest", (req, res) => {
+routes.get("/:eventId", (req, res) => {
+    try {
+        const eventId = req.params.eventId;
+        eventsController.getEvent(eventId, (err, results) => {
+            if (err)
+                return res.status(400).send(err);
+            return res.status(200).send(results);
+        });
+    } catch (err) {
+        return res.status(500).send("Unexpected error: Try after sometime", err);
+    }
+});
+
+/*routes.get("/recommended/:interest", (req, res) => {
     try {
         const interest = req.params.interest;
         eventsController.getRecommendedEvents(interest, (err, results) => {
@@ -27,7 +40,7 @@ routes.get("/recommended/:interest", (req, res) => {
     } catch (err) {
         return res.status(500).send("Unexpected error: Try after sometime", err);
     }
-});
+});*/
 
 routes.put("/:eventId", (req, res) => {
     try {

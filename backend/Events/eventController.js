@@ -4,8 +4,8 @@ const getHostedEvents = function(eventId, done) {
     eventService.getHostedEvents(eventId, done);
 };
 
-const getRecommendedEvents = function(interest, done) {
-    eventService.getRecommendedEvents(interest, done);
+const getEvent = function(eventId, done) {
+    eventService.getEvent(eventId, done);
 };
 
 const updateHostedEvent = function(eventId, eventData, done) {
@@ -24,4 +24,4 @@ const removeRsvp = function(eventId, userId, done) {
     eventService.removeRsvp(eventId, userId, done);
 };
 
-module.exports = { getHostedEvents, getRecommendedEvents, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };
+module.exports = { getHostedEvents, getEvent, getRecommendedEvents, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };

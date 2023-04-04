@@ -34,10 +34,8 @@ function App({ signOut }) {
   useEffect(() => {
     if (init.current === true) {
       const fetchPost = async () => {
-        console.log("Initializing...");
         const userData = await fetch(`${apiUrl}/users/${userId}`);
         const userJson = await userData.json();
-        console.log(userJson);
         await setUser(userJson);
         const hostedEvents = await fetch(`${apiUrl}/events/user/${userJson.profile.id}`);
         const hostedJson = await hostedEvents.json();
@@ -57,12 +55,18 @@ function App({ signOut }) {
       };
       const interests = parseInterests(user.interests);
 
-      const recommendedEvents = await Promise.all(interests && interests.map(async (int) => {
-        const fetched = await fetch(`${apiUrl}/events/recommended/${int}`);
+      const fetchedIds = await Promise.all(interests && interests.map(async (int) => {
+        const fetched = await fetch(`${apiUrl}/interests/${int}`);
         const fetchedJson = await fetched.json();
         return fetchedJson;
       }));
-      await setRecommended([...new Map(recommendedEvents.flat().map((item) => [item.details.id, item])).values()]);
+      const recommendedIds = Array.from(new Set(fetchedIds.flat()));
+      const fetchedEvents = await Promise.all(recommendedIds && recommendedIds.map(async (id) => {
+        const fetched = await fetch(`${apiUrl}/events/${id}`);
+        const fetchedJson = await fetched.json();
+        return fetchedJson;
+      }));
+      await setRecommended(fetchedEvents);
     };
     fetchPost();
   }, [user.interests]);

@@ -7,20 +7,20 @@ const getHostedEvents = function(userId, done) {
         const fileData = JSON.parse(fileContent);
         const fetchedEvents = [...fileData.filter((event) => event.host == userId)];
         if (fetchedEvents === undefined)
-            return done("No events found for requested eventId");
+            return done("No events found for requested userId");
         return done(undefined, fetchedEvents);
     });
 };
 
-const getRecommendedEvents = function(interest, done) {
+const getEvent = function(eventId, done) {
     fs.readFile("Events/events.json", (err, fileContent) => {
         if (err)
             return done("Encountered error while getting events details");
         const fileData = JSON.parse(fileContent);
-        const fetchedEvents = fileData.filter((event) => event.details.topics.includes(interest));
-        if (fetchedEvents === undefined)
-            return done(undefined, []);
-        return done(undefined, fetchedEvents);
+        const index = fileData.findIndex((event) => event.details.id == eventId);
+        if (index === -1)
+            return done("No event found for requested eventId");
+        return done(undefined, fileData[index]);
     });
 };
 
@@ -93,4 +93,4 @@ const removeRsvp = function(eventId, userId, done) {
     });
 };
 
-module.exports = { getHostedEvents, getRecommendedEvents, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };
+module.exports = { getHostedEvents, getEvent, getRecommendedEvents, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };
