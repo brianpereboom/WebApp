@@ -24,4 +24,4 @@ const removeRsvp = function(eventId, userId, done) {
     eventService.removeRsvp(eventId, userId, done);
 };
 
-module.exports = { getHostedEvents, getEvent, getRecommendedEvents, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };
+module.exports = { getHostedEvents, getEvent, updateHostedEvent, removeHostedEvent, addRsvp, removeRsvp };

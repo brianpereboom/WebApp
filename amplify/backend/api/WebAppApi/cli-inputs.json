@@ -43,13 +43,6 @@
         "setting": "open"
       }
     },
-    "/events/recommended/{interest}": {
-      "name": "/events/recommended/{interest}",
-      "lambdaFunction": "EventsPath",
-      "permissions": {
-        "setting": "open"
-      }
-    },
     "/events/rsvp/{eventId}/{userId}": {
       "name": "/events/rsvp/{eventId}/{userId}",
       "lambdaFunction": "EventsPath",

@@ -70,46 +70,26 @@ app.get('/events/user/:userId', function(req, res) {
   );
 });
 
-app.get('/events/recommended/:interest', function(req, res) {
+app.get('/events/:eventId', function(req, res) {
   // Add your code here
   res.json(
-    [
-      {
-        "host": 5,
-        "details": {
-            "id": 3,
-            "begin": "2023-05-25T06:30",
-            "end": "2023-05-27T09:30",
-            "location": "Irvine Park",
-            "minAge": 20,
-            "maxAge": 50,
-            "topics": [
-                "camping"
-            ]
-        },
-        "rsvps": [
-            5
-        ]
+    {
+      "host": 5,
+      "details": {
+          "id": 3,
+          "begin": "2023-05-25T06:30",
+          "end": "2023-05-27T09:30",
+          "location": "Irvine Park",
+          "minAge": 20,
+          "maxAge": 50,
+          "topics": [
+              "camping"
+          ]
       },
-      {
-        "host": 5,
-        "details": {
-            "id": 4,
-            "begin": "2023-05-25T06:30",
-            "end": "2023-05-27T09:30",
-            "location": "Irvine Park",
-            "minAge": 20,
-            "maxAge": 50,
-            "topics": [
-                "music",
-                "composition"
-            ]
-        },
-        "rsvps": [
-            0
-        ]
-      }
-    ]
+      "rsvps": [
+          5
+      ]
+    }
   );
 });
 
