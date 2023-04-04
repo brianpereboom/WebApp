@@ -18,7 +18,7 @@
       "function": {
         "UsersPath": {
           "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
-          "s3Key": "amplify-builds/UsersPath-545947316e5634566332-build.zip"
+          "s3Key": "amplify-builds/UsersPath-2f756c716c562b647a74-build.zip"
         },
         "InterestsPath": {
           "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
@@ -26,7 +26,7 @@
         },
         "EventsPath": {
           "deploymentBucketName": "amplify-amplify101589ceba7c4-staging-210206-deployment",
-          "s3Key": "amplify-builds/EventsPath-704236495a6847495a48-build.zip"
+          "s3Key": "amplify-builds/EventsPath-71543665374d36386d57-build.zip"
         }
       },
       "api": {
