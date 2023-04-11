@@ -13,11 +13,13 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type UserCreateFormInputValues = {
+    owner?: string;
     name?: string;
     birthdate?: string;
     address?: string;
 };
 export declare type UserCreateFormValidationValues = {
+    owner?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
     birthdate?: ValidationFunction<string>;
     address?: ValidationFunction<string>;
@@ -25,6 +27,7 @@ export declare type UserCreateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserCreateFormOverridesProps = {
     UserCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
     birthdate?: PrimitiveOverrideProps<TextFieldProps>;
     address?: PrimitiveOverrideProps<TextFieldProps>;

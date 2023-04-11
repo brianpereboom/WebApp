@@ -13,7 +13,7 @@ import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function UserUpdateForm(props) {
   const {
-    id: idProp,
+    owner: ownerProp,
     user: userModelProp,
     onSuccess,
     onError,
@@ -24,10 +24,12 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    owner: "",
     name: "",
     birthdate: "",
     address: "",
   };
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [name, setName] = React.useState(initialValues.name);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
   const [address, setAddress] = React.useState(initialValues.address);
@@ -36,6 +38,7 @@ export default function UserUpdateForm(props) {
     const cleanValues = userRecord
       ? { ...initialValues, ...userRecord }
       : initialValues;
+    setOwner(cleanValues.owner);
     setName(cleanValues.name);
     setBirthdate(cleanValues.birthdate);
     setAddress(cleanValues.address);
@@ -44,15 +47,16 @@ export default function UserUpdateForm(props) {
   const [userRecord, setUserRecord] = React.useState(userModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp
-        ? await DataStore.query(User, idProp)
+      const record = ownerProp
+        ? await DataStore.query(User, ownerProp)
         : userModelProp;
       setUserRecord(record);
     };
     queryData();
-  }, [idProp, userModelProp]);
+  }, [ownerProp, userModelProp]);
   React.useEffect(resetStateValues, [userRecord]);
   const validations = {
+    owner: [{ type: "Required" }],
     name: [],
     birthdate: [],
     address: [],
@@ -83,6 +87,7 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          owner,
           name,
           birthdate,
           address,
@@ -133,6 +138,33 @@ export default function UserUpdateForm(props) {
       {...rest}
     >
       <TextField
+        label="Owner"
+        isRequired={true}
+        isReadOnly={true}
+        value={owner}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner: value,
+              name,
+              birthdate,
+              address,
+            };
+            const result = onChange(modelFields);
+            value = result?.owner ?? value;
+          }
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
+          }
+          setOwner(value);
+        }}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
+      ></TextField>
+      <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
@@ -141,6 +173,7 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               name: value,
               birthdate,
               address,
@@ -167,6 +200,7 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               name,
               birthdate: value,
               address,
@@ -193,6 +227,7 @@ export default function UserUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               name,
               birthdate,
               address: value,
@@ -221,7 +256,7 @@ export default function UserUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || userModelProp)}
+          isDisabled={!(ownerProp || userModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -233,7 +268,7 @@ export default function UserUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || userModelProp) ||
+              !(ownerProp || userModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

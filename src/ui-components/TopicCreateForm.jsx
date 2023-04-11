@@ -23,16 +23,16 @@ export default function TopicCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    topic: "",
+    taskName: "",
   };
-  const [topic, setTopic] = React.useState(initialValues.topic);
+  const [taskName, setTaskName] = React.useState(initialValues.taskName);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setTopic(initialValues.topic);
+    setTaskName(initialValues.taskName);
     setErrors({});
   };
   const validations = {
-    topic: [{ type: "Required" }],
+    taskName: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -60,7 +60,7 @@ export default function TopicCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          topic,
+          taskName,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -107,28 +107,28 @@ export default function TopicCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Topic"
+        label="Task name"
         isRequired={true}
         isReadOnly={false}
-        value={topic}
+        value={taskName}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              topic: value,
+              taskName: value,
             };
             const result = onChange(modelFields);
-            value = result?.topic ?? value;
+            value = result?.taskName ?? value;
           }
-          if (errors.topic?.hasError) {
-            runValidationTasks("topic", value);
+          if (errors.taskName?.hasError) {
+            runValidationTasks("taskName", value);
           }
-          setTopic(value);
+          setTaskName(value);
         }}
-        onBlur={() => runValidationTasks("topic", topic)}
-        errorMessage={errors.topic?.errorMessage}
-        hasError={errors.topic?.hasError}
-        {...getOverrideProps(overrides, "topic")}
+        onBlur={() => runValidationTasks("taskName", taskName)}
+        errorMessage={errors.taskName?.errorMessage}
+        hasError={errors.taskName?.hasError}
+        {...getOverrideProps(overrides, "taskName")}
       ></TextField>
       <Flex
         justifyContent="space-between"

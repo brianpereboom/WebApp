@@ -1,5 +1,6 @@
 import { PureComponent } from "react";
-import { addRsvp, removeRsvp } from "./API";
+import { API } from "aws-amplify";
+import { updateEvent } from "./graphql/mutations";
 import Context from "./Context";
 
 class Discover extends PureComponent {
@@ -23,24 +24,11 @@ class Discover extends PureComponent {
         );
     }
 
-    renderEvent = (task, user, setUser) => {
-        const id = user.rsvp.indexOf(task.id);
-
+    renderEvent = (owner, task, recommended, setRecommended) => {
         const handleClick = (event) => {
-            event.preventDefault();
-            if (id === -1) {
-                setUser({...user, rsvp: [...user.rsvp, task.id]});
-                addRsvp(task.id, user.profile.id);
-            } else {
-                let cpy = user.rsvp.slice();
-                cpy.splice(id, 1);
-                setUser({...user, rsvp: [...cpy]});
-                removeRsvp(task.id, user.profile.id);
-            }
-            // Add rsvp functionality to API (update events to add/remove userId to/from rsvp attribute)
-            // Instead of passing one interest at a time when updating the interests DB, pass all of them at the same time
-            // Concurrent PUT requests can cause changes from one request to be dropped because the other request used the original data instead of the update
-            // Set up a database and refactor the API to make requests to the database instead of a .json file
+            const rsvped = task.rsvps === null ? {id: task.id, rsvps: [owner]} : task.rsvps.includes(owner) ? {id: task.id, rsvps: [...task.rsvps.filter((r) => r !== owner)]} : {id: task.id, rsvps: [...task.rsvps, owner]};
+            API.graphql({query: updateEvent, variables: {input: rsvped}});
+            setRecommended([...recommended.filter((r) => r.id !== task.id), {...task, rsvps: [...rsvped.rsvps]}]);
         };
 
         const renderInfo = () => {
@@ -56,29 +44,35 @@ class Discover extends PureComponent {
             );
         };
 
-        if (id === -1)
+        if (task.owner === owner)
             return (
-                <button className="btn col-2 border-secondary btn-light" onClick={handleClick}>
+                <button className="btn col-2 border-secondary btn-primary">
+                    {renderInfo()}
+                </button>
+            );
+        if (task.rsvps && task.rsvps.includes(owner))
+            return (
+                <button className="btn col-2 border-secondary btn-success" onClick={handleClick}>
                     {renderInfo()}
                 </button>
             );
         return (
-            <button className="btn col-2 border-secondary btn-success" onClick={handleClick}>
+            <button className="btn col-2 border-secondary btn-light" onClick={handleClick}>
                 {renderInfo()}
             </button>
         );
     }
-    
+
     render () {
         return (
             <Context.Consumer>
                 {
-                    ({user, setUser, recommended}) => {
+                    ({user, recommended, setRecommended}) => {
                         return (
                             <div className="container text-center">
                                 <div className="row row-cols-6 m-2">
                                     <div className="col-12">
-                                        {recommended && recommended.map((item) => (this.renderEvent(item.details, user, setUser)))}
+                                        {recommended && recommended.map((item) => (this.renderEvent(user.owner, item, recommended, setRecommended)))}
                                     </div>
                                 </div>
                             </div>

@@ -14,11 +14,13 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type UserUpdateFormInputValues = {
+    owner?: string;
     name?: string;
     birthdate?: string;
     address?: string;
 };
 export declare type UserUpdateFormValidationValues = {
+    owner?: ValidationFunction<string>;
     name?: ValidationFunction<string>;
     birthdate?: ValidationFunction<string>;
     address?: ValidationFunction<string>;
@@ -26,6 +28,7 @@ export declare type UserUpdateFormValidationValues = {
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type UserUpdateFormOverridesProps = {
     UserUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
     name?: PrimitiveOverrideProps<TextFieldProps>;
     birthdate?: PrimitiveOverrideProps<TextFieldProps>;
     address?: PrimitiveOverrideProps<TextFieldProps>;
@@ -33,7 +36,7 @@ export declare type UserUpdateFormOverridesProps = {
 export declare type UserUpdateFormProps = React.PropsWithChildren<{
     overrides?: UserUpdateFormOverridesProps | undefined | null;
 } & {
-    id?: string;
+    owner?: string;
     user?: User;
     onSubmit?: (fields: UserUpdateFormInputValues) => UserUpdateFormInputValues;
     onSuccess?: (fields: UserUpdateFormInputValues) => void;

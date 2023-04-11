@@ -14,20 +14,26 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type InterestUpdateFormInputValues = {
-    taskName?: string;
+    owner?: string;
+    topic?: string;
+    parent?: string;
 };
 export declare type InterestUpdateFormValidationValues = {
-    taskName?: ValidationFunction<string>;
+    owner?: ValidationFunction<string>;
+    topic?: ValidationFunction<string>;
+    parent?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InterestUpdateFormOverridesProps = {
     InterestUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    taskName?: PrimitiveOverrideProps<TextFieldProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
+    topic?: PrimitiveOverrideProps<TextFieldProps>;
+    parent?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type InterestUpdateFormProps = React.PropsWithChildren<{
     overrides?: InterestUpdateFormOverridesProps | undefined | null;
 } & {
-    id?: string;
+    owner?: string;
     interest?: Interest;
     onSubmit?: (fields: InterestUpdateFormInputValues) => InterestUpdateFormInputValues;
     onSuccess?: (fields: InterestUpdateFormInputValues) => void;

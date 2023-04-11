@@ -13,7 +13,7 @@ import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function InterestUpdateForm(props) {
   const {
-    id: idProp,
+    owner: ownerProp,
     interest: interestModelProp,
     onSuccess,
     onError,
@@ -24,30 +24,38 @@ export default function InterestUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    taskName: "",
+    owner: "",
+    topic: "",
+    parent: "",
   };
-  const [taskName, setTaskName] = React.useState(initialValues.taskName);
+  const [owner, setOwner] = React.useState(initialValues.owner);
+  const [topic, setTopic] = React.useState(initialValues.topic);
+  const [parent, setParent] = React.useState(initialValues.parent);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = interestRecord
       ? { ...initialValues, ...interestRecord }
       : initialValues;
-    setTaskName(cleanValues.taskName);
+    setOwner(cleanValues.owner);
+    setTopic(cleanValues.topic);
+    setParent(cleanValues.parent);
     setErrors({});
   };
   const [interestRecord, setInterestRecord] = React.useState(interestModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp
-        ? await DataStore.query(Interest, idProp)
+      const record = ownerProp
+        ? await DataStore.query(Interest, ownerProp)
         : interestModelProp;
       setInterestRecord(record);
     };
     queryData();
-  }, [idProp, interestModelProp]);
+  }, [ownerProp, interestModelProp]);
   React.useEffect(resetStateValues, [interestRecord]);
   const validations = {
-    taskName: [{ type: "Required" }],
+    owner: [{ type: "Required" }],
+    topic: [{ type: "Required" }],
+    parent: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -75,7 +83,9 @@ export default function InterestUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          taskName,
+          owner,
+          topic,
+          parent,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -123,28 +133,82 @@ export default function InterestUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Task name"
+        label="Owner"
         isRequired={true}
-        isReadOnly={false}
-        value={taskName}
+        isReadOnly={true}
+        value={owner}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              taskName: value,
+              owner: value,
+              topic,
+              parent,
             };
             const result = onChange(modelFields);
-            value = result?.taskName ?? value;
+            value = result?.owner ?? value;
           }
-          if (errors.taskName?.hasError) {
-            runValidationTasks("taskName", value);
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
           }
-          setTaskName(value);
+          setOwner(value);
         }}
-        onBlur={() => runValidationTasks("taskName", taskName)}
-        errorMessage={errors.taskName?.errorMessage}
-        hasError={errors.taskName?.hasError}
-        {...getOverrideProps(overrides, "taskName")}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
+      ></TextField>
+      <TextField
+        label="Topic"
+        isRequired={true}
+        isReadOnly={false}
+        value={topic}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              topic: value,
+              parent,
+            };
+            const result = onChange(modelFields);
+            value = result?.topic ?? value;
+          }
+          if (errors.topic?.hasError) {
+            runValidationTasks("topic", value);
+          }
+          setTopic(value);
+        }}
+        onBlur={() => runValidationTasks("topic", topic)}
+        errorMessage={errors.topic?.errorMessage}
+        hasError={errors.topic?.hasError}
+        {...getOverrideProps(overrides, "topic")}
+      ></TextField>
+      <TextField
+        label="Parent"
+        isRequired={false}
+        isReadOnly={false}
+        value={parent}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              topic,
+              parent: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.parent ?? value;
+          }
+          if (errors.parent?.hasError) {
+            runValidationTasks("parent", value);
+          }
+          setParent(value);
+        }}
+        onBlur={() => runValidationTasks("parent", parent)}
+        errorMessage={errors.parent?.errorMessage}
+        hasError={errors.parent?.hasError}
+        {...getOverrideProps(overrides, "parent")}
       ></TextField>
       <Flex
         justifyContent="space-between"
@@ -157,7 +221,7 @@ export default function InterestUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || interestModelProp)}
+          isDisabled={!(ownerProp || interestModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -169,7 +233,7 @@ export default function InterestUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || interestModelProp) ||
+              !(ownerProp || interestModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

@@ -20,3 +20,7 @@
 .gu-transit {
     pointer-events: none;
 }
+
+.hiddenId {
+    max-height: 0;
+}

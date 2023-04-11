@@ -1,4 +1,4 @@
-const apiUrl = `https://h67fkqg9yl.execute-api.us-east-1.amazonaws.com/staging`;
+const apiUrl = `http://localhost:3000/api`;
 
 const saveUser = (userId, userData) => {
     fetch(`${apiUrl}/users/${userId}`, {

@@ -14,6 +14,7 @@ import {
   Grid,
   Icon,
   ScrollView,
+  SelectField,
   Text,
   TextField,
   useTheme,
@@ -182,7 +183,7 @@ function ArrayField({
 }
 export default function EventUpdateForm(props) {
   const {
-    id: idProp,
+    owner: ownerProp,
     event: eventModelProp,
     onSuccess,
     onError,
@@ -193,24 +194,31 @@ export default function EventUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    owner: "",
     begin: "",
     end: "",
     location: "",
     minAge: "",
     maxAge: "",
     topics: [],
+    rsvps: [],
+    status: "",
   };
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [begin, setBegin] = React.useState(initialValues.begin);
   const [end, setEnd] = React.useState(initialValues.end);
   const [location, setLocation] = React.useState(initialValues.location);
   const [minAge, setMinAge] = React.useState(initialValues.minAge);
   const [maxAge, setMaxAge] = React.useState(initialValues.maxAge);
   const [topics, setTopics] = React.useState(initialValues.topics);
+  const [rsvps, setRsvps] = React.useState(initialValues.rsvps);
+  const [status, setStatus] = React.useState(initialValues.status);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = eventRecord
       ? { ...initialValues, ...eventRecord }
       : initialValues;
+    setOwner(cleanValues.owner);
     setBegin(cleanValues.begin);
     setEnd(cleanValues.end);
     setLocation(cleanValues.location);
@@ -218,28 +226,36 @@ export default function EventUpdateForm(props) {
     setMaxAge(cleanValues.maxAge);
     setTopics(cleanValues.topics ?? []);
     setCurrentTopicsValue("");
+    setRsvps(cleanValues.rsvps ?? []);
+    setCurrentRsvpsValue("");
+    setStatus(cleanValues.status);
     setErrors({});
   };
   const [eventRecord, setEventRecord] = React.useState(eventModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp
-        ? await DataStore.query(Event, idProp)
+      const record = ownerProp
+        ? await DataStore.query(Event, ownerProp)
         : eventModelProp;
       setEventRecord(record);
     };
     queryData();
-  }, [idProp, eventModelProp]);
+  }, [ownerProp, eventModelProp]);
   React.useEffect(resetStateValues, [eventRecord]);
   const [currentTopicsValue, setCurrentTopicsValue] = React.useState("");
   const topicsRef = React.createRef();
+  const [currentRsvpsValue, setCurrentRsvpsValue] = React.useState("");
+  const rsvpsRef = React.createRef();
   const validations = {
+    owner: [{ type: "Required" }],
     begin: [],
     end: [],
     location: [],
     minAge: [],
     maxAge: [],
     topics: [],
+    rsvps: [],
+    status: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -267,12 +283,15 @@ export default function EventUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          owner,
           begin,
           end,
           location,
           minAge,
           maxAge,
           topics,
+          rsvps,
+          status,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -320,6 +339,38 @@ export default function EventUpdateForm(props) {
       {...rest}
     >
       <TextField
+        label="Owner"
+        isRequired={true}
+        isReadOnly={true}
+        value={owner}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner: value,
+              begin,
+              end,
+              location,
+              minAge,
+              maxAge,
+              topics,
+              rsvps,
+              status,
+            };
+            const result = onChange(modelFields);
+            value = result?.owner ?? value;
+          }
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
+          }
+          setOwner(value);
+        }}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
+      ></TextField>
+      <TextField
         label="Begin"
         isRequired={false}
         isReadOnly={false}
@@ -328,12 +379,15 @@ export default function EventUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               begin: value,
               end,
               location,
               minAge,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.begin ?? value;
@@ -357,12 +411,15 @@ export default function EventUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end: value,
               location,
               minAge,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.end ?? value;
@@ -386,12 +443,15 @@ export default function EventUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location: value,
               minAge,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -419,12 +479,15 @@ export default function EventUpdateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location,
               minAge: value,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.minAge ?? value;
@@ -452,12 +515,15 @@ export default function EventUpdateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location,
               minAge,
               maxAge: value,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.maxAge ?? value;
@@ -477,12 +543,15 @@ export default function EventUpdateForm(props) {
           let values = items;
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location,
               minAge,
               maxAge,
               topics: values,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             values = result?.topics ?? values;
@@ -519,6 +588,94 @@ export default function EventUpdateForm(props) {
           {...getOverrideProps(overrides, "topics")}
         ></TextField>
       </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              begin,
+              end,
+              location,
+              minAge,
+              maxAge,
+              topics,
+              rsvps: values,
+              status,
+            };
+            const result = onChange(modelFields);
+            values = result?.rsvps ?? values;
+          }
+          setRsvps(values);
+          setCurrentRsvpsValue("");
+        }}
+        currentFieldValue={currentRsvpsValue}
+        label={"Rsvps"}
+        items={rsvps}
+        hasError={errors?.rsvps?.hasError}
+        errorMessage={errors?.rsvps?.errorMessage}
+        setFieldValue={setCurrentRsvpsValue}
+        inputFieldRef={rsvpsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Rsvps"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentRsvpsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.rsvps?.hasError) {
+              runValidationTasks("rsvps", value);
+            }
+            setCurrentRsvpsValue(value);
+          }}
+          onBlur={() => runValidationTasks("rsvps", currentRsvpsValue)}
+          errorMessage={errors.rsvps?.errorMessage}
+          hasError={errors.rsvps?.hasError}
+          ref={rsvpsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "rsvps")}
+        ></TextField>
+      </ArrayField>
+      <SelectField
+        label="Status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={status}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              begin,
+              end,
+              location,
+              minAge,
+              maxAge,
+              topics,
+              rsvps,
+              status: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.status ?? value;
+          }
+          if (errors.status?.hasError) {
+            runValidationTasks("status", value);
+          }
+          setStatus(value);
+        }}
+        onBlur={() => runValidationTasks("status", status)}
+        errorMessage={errors.status?.errorMessage}
+        hasError={errors.status?.hasError}
+        {...getOverrideProps(overrides, "status")}
+      >
+        <option
+          children="Exists"
+          value="EXISTS"
+          {...getOverrideProps(overrides, "statusoption0")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
@@ -530,7 +687,7 @@ export default function EventUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || eventModelProp)}
+          isDisabled={!(ownerProp || eventModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -542,7 +699,7 @@ export default function EventUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || eventModelProp) ||
+              !(ownerProp || eventModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

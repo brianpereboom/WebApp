@@ -1,6 +1,7 @@
 import { PureComponent } from "react";
-import { saveUser } from "./API";
 import Context from "./Context";
+import { API } from "aws-amplify"
+import { updateUser } from "./graphql/mutations";
 
 class Profile extends PureComponent {
     render() {
@@ -12,17 +13,17 @@ class Profile extends PureComponent {
                             event.preventDefault();
 
                             const updatedUser = {
-                                ...user,
-                                profile: {
-                                    id: parseInt(user.profile.id),
-                                    name: event.target.name.value,
-                                    birthdate: event.target.birthdate.value,
-                                    address: event.target.address.value
-                                }
+                                owner: user.owner,
+                                name: event.target.name.value,
+                                birthdate: event.target.birthdate.value,
+                                address: event.target.address.value
                             };
+                            async function updateUsr(usr) {
+                              await API.graphql({query: updateUser, variables: {input: usr}});
+                            };
+                            updateUsr(updatedUser);
+
                             setUser(updatedUser);
-                            
-                            saveUser(user.profile.id, updatedUser);
                             
                             setEnvironment({...environment, saved: true});
                         };
@@ -32,11 +33,11 @@ class Profile extends PureComponent {
                                 {environment.saved && <div className="alert alert-success">Saved!</div>}
                                 <div className="form-group ms-2 me-2">
                                     <label htmlFor="name">Name</label>
-                                    <input className="form-control" id="name" name="name" defaultValue={user.profile.name}></input>
+                                    <input className="form-control" id="name" name="name" defaultValue={user.name}></input>
                                     <label htmlFor="birthdate">Birthdate</label>
-                                    <input className="form-control" type="date" id="birthdate" name="birthdate" defaultValue={user.profile.birthdate}></input>
+                                    <input className="form-control" type="date" id="birthdate" name="birthdate" defaultValue={user.birthdate}></input>
                                     <label htmlFor="address">Address</label>
-                                    <input className="form-control" id="address" name="address" defaultValue={user.profile.address}></input>
+                                    <input className="form-control" id="address" name="address" defaultValue={user.address}></input>
                                     <button className="btn btn-success mt-2" type="submit">Save</button>
                                 </div>
                             </form>

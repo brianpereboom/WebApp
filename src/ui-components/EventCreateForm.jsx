@@ -14,6 +14,7 @@ import {
   Grid,
   Icon,
   ScrollView,
+  SelectField,
   Text,
   TextField,
   useTheme,
@@ -192,21 +193,28 @@ export default function EventCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    owner: "",
     begin: "",
     end: "",
     location: "",
     minAge: "",
     maxAge: "",
     topics: [],
+    rsvps: [],
+    status: "",
   };
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [begin, setBegin] = React.useState(initialValues.begin);
   const [end, setEnd] = React.useState(initialValues.end);
   const [location, setLocation] = React.useState(initialValues.location);
   const [minAge, setMinAge] = React.useState(initialValues.minAge);
   const [maxAge, setMaxAge] = React.useState(initialValues.maxAge);
   const [topics, setTopics] = React.useState(initialValues.topics);
+  const [rsvps, setRsvps] = React.useState(initialValues.rsvps);
+  const [status, setStatus] = React.useState(initialValues.status);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setOwner(initialValues.owner);
     setBegin(initialValues.begin);
     setEnd(initialValues.end);
     setLocation(initialValues.location);
@@ -214,17 +222,25 @@ export default function EventCreateForm(props) {
     setMaxAge(initialValues.maxAge);
     setTopics(initialValues.topics);
     setCurrentTopicsValue("");
+    setRsvps(initialValues.rsvps);
+    setCurrentRsvpsValue("");
+    setStatus(initialValues.status);
     setErrors({});
   };
   const [currentTopicsValue, setCurrentTopicsValue] = React.useState("");
   const topicsRef = React.createRef();
+  const [currentRsvpsValue, setCurrentRsvpsValue] = React.useState("");
+  const rsvpsRef = React.createRef();
   const validations = {
+    owner: [{ type: "Required" }],
     begin: [],
     end: [],
     location: [],
     minAge: [],
     maxAge: [],
     topics: [],
+    rsvps: [],
+    status: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -252,12 +268,15 @@ export default function EventCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          owner,
           begin,
           end,
           location,
           minAge,
           maxAge,
           topics,
+          rsvps,
+          status,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -304,6 +323,38 @@ export default function EventCreateForm(props) {
       {...rest}
     >
       <TextField
+        label="Owner"
+        isRequired={true}
+        isReadOnly={false}
+        value={owner}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner: value,
+              begin,
+              end,
+              location,
+              minAge,
+              maxAge,
+              topics,
+              rsvps,
+              status,
+            };
+            const result = onChange(modelFields);
+            value = result?.owner ?? value;
+          }
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
+          }
+          setOwner(value);
+        }}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
+      ></TextField>
+      <TextField
         label="Begin"
         isRequired={false}
         isReadOnly={false}
@@ -312,12 +363,15 @@ export default function EventCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               begin: value,
               end,
               location,
               minAge,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.begin ?? value;
@@ -341,12 +395,15 @@ export default function EventCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end: value,
               location,
               minAge,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.end ?? value;
@@ -370,12 +427,15 @@ export default function EventCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location: value,
               minAge,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.location ?? value;
@@ -403,12 +463,15 @@ export default function EventCreateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location,
               minAge: value,
               maxAge,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.minAge ?? value;
@@ -436,12 +499,15 @@ export default function EventCreateForm(props) {
             : parseInt(e.target.value);
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location,
               minAge,
               maxAge: value,
               topics,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.maxAge ?? value;
@@ -461,12 +527,15 @@ export default function EventCreateForm(props) {
           let values = items;
           if (onChange) {
             const modelFields = {
+              owner,
               begin,
               end,
               location,
               minAge,
               maxAge,
               topics: values,
+              rsvps,
+              status,
             };
             const result = onChange(modelFields);
             values = result?.topics ?? values;
@@ -503,6 +572,94 @@ export default function EventCreateForm(props) {
           {...getOverrideProps(overrides, "topics")}
         ></TextField>
       </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              begin,
+              end,
+              location,
+              minAge,
+              maxAge,
+              topics,
+              rsvps: values,
+              status,
+            };
+            const result = onChange(modelFields);
+            values = result?.rsvps ?? values;
+          }
+          setRsvps(values);
+          setCurrentRsvpsValue("");
+        }}
+        currentFieldValue={currentRsvpsValue}
+        label={"Rsvps"}
+        items={rsvps}
+        hasError={errors?.rsvps?.hasError}
+        errorMessage={errors?.rsvps?.errorMessage}
+        setFieldValue={setCurrentRsvpsValue}
+        inputFieldRef={rsvpsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Rsvps"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentRsvpsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.rsvps?.hasError) {
+              runValidationTasks("rsvps", value);
+            }
+            setCurrentRsvpsValue(value);
+          }}
+          onBlur={() => runValidationTasks("rsvps", currentRsvpsValue)}
+          errorMessage={errors.rsvps?.errorMessage}
+          hasError={errors.rsvps?.hasError}
+          ref={rsvpsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "rsvps")}
+        ></TextField>
+      </ArrayField>
+      <SelectField
+        label="Status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={status}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              begin,
+              end,
+              location,
+              minAge,
+              maxAge,
+              topics,
+              rsvps,
+              status: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.status ?? value;
+          }
+          if (errors.status?.hasError) {
+            runValidationTasks("status", value);
+          }
+          setStatus(value);
+        }}
+        onBlur={() => runValidationTasks("status", status)}
+        errorMessage={errors.status?.errorMessage}
+        hasError={errors.status?.hasError}
+        {...getOverrideProps(overrides, "status")}
+      >
+        <option
+          children="Exists"
+          value="EXISTS"
+          {...getOverrideProps(overrides, "statusoption0")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

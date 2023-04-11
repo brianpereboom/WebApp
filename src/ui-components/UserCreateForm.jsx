@@ -23,21 +23,25 @@ export default function UserCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
+    owner: "",
     name: "",
     birthdate: "",
     address: "",
   };
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [name, setName] = React.useState(initialValues.name);
   const [birthdate, setBirthdate] = React.useState(initialValues.birthdate);
   const [address, setAddress] = React.useState(initialValues.address);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
+    setOwner(initialValues.owner);
     setName(initialValues.name);
     setBirthdate(initialValues.birthdate);
     setAddress(initialValues.address);
     setErrors({});
   };
   const validations = {
+    owner: [{ type: "Required" }],
     name: [],
     birthdate: [],
     address: [],
@@ -68,6 +72,7 @@ export default function UserCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
+          owner,
           name,
           birthdate,
           address,
@@ -117,6 +122,33 @@ export default function UserCreateForm(props) {
       {...rest}
     >
       <TextField
+        label="Owner"
+        isRequired={true}
+        isReadOnly={false}
+        value={owner}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner: value,
+              name,
+              birthdate,
+              address,
+            };
+            const result = onChange(modelFields);
+            value = result?.owner ?? value;
+          }
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
+          }
+          setOwner(value);
+        }}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
+      ></TextField>
+      <TextField
         label="Name"
         isRequired={false}
         isReadOnly={false}
@@ -125,6 +157,7 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               name: value,
               birthdate,
               address,
@@ -151,6 +184,7 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               name,
               birthdate: value,
               address,
@@ -177,6 +211,7 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
+              owner,
               name,
               birthdate,
               address: value,

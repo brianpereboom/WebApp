@@ -13,15 +13,15 @@ export declare type ValidationResponse = {
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
 export declare type TopicCreateFormInputValues = {
-    topic?: string;
+    taskName?: string;
 };
 export declare type TopicCreateFormValidationValues = {
-    topic?: ValidationFunction<string>;
+    taskName?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type TopicCreateFormOverridesProps = {
     TopicCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    topic?: PrimitiveOverrideProps<TextFieldProps>;
+    taskName?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type TopicCreateFormProps = React.PropsWithChildren<{
     overrides?: TopicCreateFormOverridesProps | undefined | null;

@@ -5,9 +5,12 @@ import Profile from "./Profile";
 import Interests from "./Interests";
 import Events from "./Events";
 import Discover from "./Discover";
-import { apiUrl } from "./API";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap";
+
+import { Auth, API } from "aws-amplify";
+import { createUser } from "./graphql/mutations";
+import { listUsers, eventsByOwner, eventsByStatus, interestsByOwner } from "./graphql/queries";
 
 import "@aws-amplify/ui-react/styles.css";
 import {
@@ -17,6 +20,7 @@ import {
 } from "@aws-amplify/ui-react";
 
 function App({ signOut }) {
+
   const cachedEnvironment = JSON.parse(localStorage.getItem("environment")) || { saved: false };
   const [environment, setEnvironment] = useState(cachedEnvironment);
 
@@ -25,63 +29,50 @@ function App({ signOut }) {
 
   const cachedUser = JSON.parse(localStorage.getItem("user")) || {};
   const [user, setUser] = useState(cachedUser);
+
+  const cachedInterests = JSON.parse(localStorage.getItem("interests")) || [];
+  const [interests, setInterests] = useState(cachedInterests);
   
   const cachedHosted = JSON.parse(localStorage.getItem("hosted")) || [];
   const [hosted, setHosted] = useState(cachedHosted);
 
-  const userId = 5; // Get the url which corresponds with the user's data from the permissions granted by AWS Cognito
-  const init = useRef(localStorage.getItem("init") || true);
+  const cachedRecommended = JSON.parse(localStorage.getItem("recommended")) || [];
+  const [recommended, setRecommended] = useState(cachedRecommended);
+
+  const init = useRef(JSON.parse(localStorage.getItem("init")) || true);
   useEffect(() => {
     if (init.current === true) {
       const fetchPost = async () => {
-        const userData = await fetch(`${apiUrl}/users/${userId}`);
-        const userJson = await userData.json();
-        await setUser(userJson);
-        const hostedEvents = await fetch(`${apiUrl}/events/user/${userJson.profile.id}`);
-        const hostedJson = await hostedEvents.json();
-        await setHosted([...hostedJson]);
+        const amplifyUserData = await Auth.currentUserInfo();
+        const userData = await API.graphql({query: listUsers, variables: {owner: amplifyUserData.username, limit: 1}});
+        let userObject = {owner: amplifyUserData.username, name: "", birthdate: "", address: ""};
+        if (userData.data.listUsers.items.length === 0) {
+          await API.graphql({query: createUser, variables: {input: userObject}});
+        } else {
+          userObject = {owner: amplifyUserData.username, name: userData.data.listUsers.items[0].name, birthdate: userData.data.listUsers.items[0].birthdate, address: userData.data.listUsers.items[0].address};
+        }
+        await setUser(userObject);
+        const interestsData = await API.graphql({query: interestsByOwner, variables: {owner: amplifyUserData.username}});
+        const interestsContent = interestsData.data.interestsByOwner.items;
+        await setInterests(interestsContent);
+        const hostedData = await API.graphql({query: eventsByOwner, variables: {owner: amplifyUserData.username}});
+        await setHosted(hostedData.data.eventsByOwner.items);
+        if (interestsContent) {
+          const recommendedData = await API.graphql({query: eventsByStatus, variables: {status: "EXISTS"}});
+          const filteredRecommended = recommendedData.data.eventsByStatus.items.filter((item) => interestsContent.some((int) => item.topics.includes(int.topic)));
+          await setRecommended(filteredRecommended);
+        }
         await localStorage.setItem("init", false);
       };
       fetchPost();
     }
   }, []);
   
-  const [recommended, setRecommended] = useState([]);
-  useEffect(() => {
-    const fetchPost = async () => {
-      const parseInterests = (interests) => {
-          const parsed = interests && interests.map((int) => [...parseInterests(int.subTasks), int.taskName]);
-          return parsed ? parsed.flat() : [];
-      };
-      const interests = parseInterests(user.interests);
-
-      const fetchedIds = await Promise.all(interests && interests.map(async (int) => {
-        const fetched = await fetch(`${apiUrl}/interests/${int}`);
-        const fetchedJson = await fetched.json();
-        return fetchedJson;
-      }));
-      const recommendedIds = Array.from(new Set(fetchedIds.flat()));
-      const fetchedEvents = await Promise.all(recommendedIds && recommendedIds.map(async (id) => {
-        const fetched = await fetch(`${apiUrl}/events/${id}`);
-        const fetchedJson = await fetched.json();
-        return fetchedJson;
-      }));
-      await setRecommended(fetchedEvents);
-    };
-    fetchPost();
-  }, [user.interests]);
-  
   const cachedEvents = JSON.parse(localStorage.getItem("events")) || [];
   const [events, setEvents] = useState(cachedEvents);
   
-  const cachedEvent = JSON.parse(localStorage.getItem("newEvent")) || {host: userId, details: {}, rsvp: []};
+  const cachedEvent = JSON.parse(localStorage.getItem("newEvent")) || {owner: user.owner, begin: "", end: "", location: "", minAge: 0, maxAge: 100, topics: [], rsvps: [], status: "EXISTS"};
   const [newEvent, setNewEvent] = useState(cachedEvent);
-
-  const cachedInterests = JSON.parse(localStorage.getItem("interests")) || {add: [], remove: []};
-  const [interests, setInterests] = useState(cachedInterests);
-
-  const cachedTopics = JSON.parse(localStorage.getItem("topics")) || {add: [], remove: []};
-  const [topics, setTopics] = useState(cachedTopics);
 
   useEffect(() => {
     localStorage.setItem("environment", JSON.stringify(environment));
@@ -96,8 +87,16 @@ function App({ signOut }) {
   }, [user]);
 
   useEffect(() => {
+    localStorage.setItem("interests", JSON.stringify(interests));
+  }, [interests]);
+
+  useEffect(() => {
     localStorage.setItem("hosted", JSON.stringify(hosted));
   }, [hosted]);
+
+  useEffect(() => {
+    localStorage.setItem("recommended", JSON.stringify(recommended));
+  }, [recommended]);
 
   useEffect(() => {
     localStorage.setItem("events", JSON.stringify(events));
@@ -107,14 +106,6 @@ function App({ signOut }) {
     localStorage.setItem("newEvent", JSON.stringify(newEvent));
   }, [newEvent]);
 
-  useEffect(() => {
-    localStorage.setItem("interests", JSON.stringify(interests));
-  }, [interests]);
-
-  useEffect(() => {
-    localStorage.setItem("topics", JSON.stringify(topics));
-  }, [topics]);
-  
   const GetPage = () => {
     let state = useContext(Context);
     if (!state.path)
@@ -131,7 +122,7 @@ function App({ signOut }) {
   }
 
   return (
-    <Context.Provider value={{ environment, setEnvironment, path, setPath, user, setUser, hosted, setHosted, recommended, events, setEvents, newEvent, setNewEvent, interests, setInterests, topics, setTopics}}>
+    <Context.Provider value={{ environment, setEnvironment, path, setPath, user, setUser, interests, setInterests, hosted, setHosted, events, setEvents, newEvent, setNewEvent, recommended, setRecommended}}>
       <header>
         <nav className="navbar bg-primary">
           <div className="container-fluid">

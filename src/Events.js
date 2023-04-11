@@ -1,45 +1,12 @@
 import Context from "./Context";
 import { PureComponent } from "react";
 import "../src/Events.css";
-import { addEventInterest, removeEventInterest, saveEvent, removeEvent } from "./API";
+import { API } from 'aws-amplify';
+import { createEvent, updateEvent, deleteEvent } from './graphql/mutations';
 
 class Events extends PureComponent{
     toString = (datetime) => {
         return (new Date(datetime)).toLocaleString("en-GB", {day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "numeric"});
-    }
-
-    renderInterests = (tasks, newEvent, setNewEvent, topics, setTopics) => {
-        const handleClick = (event, topic) => {
-            event.preventDefault();
-            const addTopic = () => {
-                const index = topics.remove.findIndex((t) => t === topic)
-                if (index === -1)
-                    setTopics({add: [...topics.add, topic], remove: [...topics.remove]});
-                else {
-                    let cpy = [...topics.remove];
-                    cpy.splice(index, 1);
-                    setTopics({add: [...topics.add], remove: [...cpy]});
-                }
-            };
-            if (!("topics" in newEvent.details)) {
-                addTopic();
-                setNewEvent({...newEvent, details: { ...newEvent.details, topics: [topic]}});
-            } else if (newEvent.details.topics.indexOf(topic) === -1) {
-                addTopic();
-                setNewEvent({...newEvent, details: {...newEvent.details, topics: [...newEvent.details.topics, topic]}});
-            }
-        };
-
-        return (
-            <>
-                {tasks.map((item) => 
-                    <>
-                        <div className="dropdown-item" onClick={(e) => handleClick(e, item.taskName)}>{item.taskName}</div>
-                        {item.subTasks && this.renderInterests(item.subTasks, newEvent, setNewEvent, topics, setTopics)}
-                    </>
-                )}
-            </>
-        );
     }
 
     renderEvents = (task, setNewEvent) => {
@@ -50,12 +17,12 @@ class Events extends PureComponent{
 
         return (
             <button className="btn col-2 btn-light border-secondary" onClick={handleClick}>
-                <div>{task.details.id}</div>
-                <div>{this.toString(task.details.begin)}</div>
-                <div>{this.toString(task.details.end)}</div>
-                <div>Location: {task.details.location}</div>
-                <div>Ages: {task.details.minAge}-{task.details.maxAge}</div>
-                {task.details.topics && task.details.topics.map((topic) => (<div>{topic}</div>))}
+                <div>{task.id}</div>
+                <div>{this.toString(task.begin)}</div>
+                <div>{this.toString(task.end)}</div>
+                <div>Location: {task.location}</div>
+                <div>Ages: {task.minAge}-{task.maxAge}</div>
+                {task.topics && task.topics.map((topic) => (<div>{topic}</div>))}
             </button>
         );
     }
@@ -64,74 +31,59 @@ class Events extends PureComponent{
         return (
             <Context.Consumer>
                 {
-                    ({user, setUser, hosted, setHosted, newEvent, setNewEvent, topics, setTopics}) => {
-                        const handleClick = (event, item) => {
+                    ({user, interests, hosted, setHosted, newEvent, setNewEvent}) => {
+                        async function createEvnt(evnt) {
+                            return await API.graphql({query: createEvent, variables: {input: {owner: evnt.owner, begin: evnt.begin, end: evnt.end, location: evnt.location, minAge: evnt.minAge, maxAge: evnt.maxAge, topics: evnt.topics, rsvps: evnt.rsvps, status: evnt.status}}});
+                        };
+                        async function updateEvnt(evnt) {
+                            return await API.graphql({query: updateEvent, variables: {input: {id: evnt.id, owner: evnt.owner, begin: evnt.begin, end: evnt.end, location: evnt.location, minAge: evnt.minAge, maxAge: evnt.maxAge, topics: evnt.topics, rsvps: evnt.rsvps, status: evnt.status}}});
+                        };
+                        async function deleteEvnt(id) {
+                            await API.graphql({query: deleteEvent, variables: {input: {id: id}}});
+                        };
+                        // handleAddTopic not working when topics is empty
+                        const handleAddTopic = (event, topic) => {
                             event.preventDefault();
-                            const index = topics.add.findIndex((t) => t === item)
-                            if (index === -1)
-                                setTopics({add: [...topics.add], remove: [...topics.remove, item]});
-                            else {
-                                let cpy = [...topics.add];
-                                cpy.splice(index, 1);
-                                setTopics({add: [...cpy], remove: [...topics.remove]});
-                            }
-                            setNewEvent({...newEvent, details: { ...newEvent.details, topics: [...newEvent.details.topics.filter((id) => (id !== item))]}});
+                            if (newEvent.topics === null)
+                                setNewEvent({...newEvent, topics: [topic]});
+                            else
+                                setNewEvent({...newEvent, topics: [...newEvent.topics.filter((t) => t !== topic), topic]});
+                        };
+
+                        const handleRemoveTopic = (event, item) => {
+                            event.preventDefault();
+                            setNewEvent({...newEvent, topics: [...newEvent.topics.filter((id) => (id !== item))]});
                         }
 
                         const handleSubmit = (event) => {
                             event.preventDefault();
                             setNewEvent({
                                 ...newEvent,
-                                details: {
-                                    ...newEvent.details,
-                                    begin: event.target.begin.value,
-                                    end: event.target.end.value,
-                                    location: event.target.location.value
-                                }
+                                begin: event.target.begin.value,
+                                end: event.target.end.value,
+                                location: event.target.location.value
                             });
                         };
 
                         const handleCreate = (event) => {
                             event.preventDefault();
-                            const id = 10;
-                            const cpy = {...newEvent, details: {...newEvent.details, id: id}};
-                            if ("topics" in cpy.details) {
-                                const addedTopics = [...cpy.details.topics];
-                                addedTopics.map((t) => addEventInterest(id, t));
-                            }
-                            setUser({...user, hosted: [...user.hosted, id: id]});
-                            setHosted([...hosted, {...cpy}]);
-                            setNewEvent({...cpy});
-                            saveEvent(id, {...cpy});
+                            const createdEvent = createEvnt(newEvent);
+                            setHosted([...hosted, createdEvent]);
+                            setNewEvent(createdEvent);
                         };
 
                         const handleUpdate = (event) => {
                             event.preventDefault();
-                            setHosted([...hosted.filter((item) => item.details.id !== newEvent.details.id), newEvent]);
-                            topics.add && topics.add.map((t) => addEventInterest(newEvent.details.id, t));
-                            topics.remove && topics.remove.map((t) => removeEventInterest(newEvent.details.id, t));
-                            setTopics({add: [], remove: []});
-                            saveEvent(newEvent.details.id, newEvent);
+                            setHosted([...hosted.filter((item) => item.id !== newEvent.id), newEvent]);
+                            updateEvnt(newEvent);
                         };
 
                         const handleDelete = (event) => {
                             event.preventDefault();
-                            const id = newEvent.details.id;
-                            let usrCpy = [...user.hosted];
-                            const usrIdx = usrCpy.findIndex((item) => item === id);
-                            let hostCpy = [...hosted];
-                            const hostIdx = hostCpy.findIndex((item) => item.details.id === id);
-                            if ("topics" in hostCpy[hostIdx].details) {
-                                const removedTopics = [...hostCpy[hostIdx].details.topics];
-                                removedTopics.map((t) => removeEventInterest(id, t));
-                            }
-                            removeEvent(id);
-                            setTopics({add: [], remove: []});
-                            usrCpy.splice(usrIdx, 1);
-                            setUser({...user, hosted: [...usrCpy]});
-                            hostCpy.splice(hostIdx, 1);
-                            setHosted([...hostCpy])
-                            setNewEvent({host: user.profile.id, details: {}, rsvp: []});
+                            const id = newEvent.id;
+                            deleteEvnt(id);
+                            setHosted([...hosted.filter((host) => host.id === id)]);
+                            setNewEvent({owner: user.owner, begin: "", end: "", location: "", minAge: 0, maxAge: 100, topics: [], rsvps: [], status: "EXISTS"});
                         };
 
                         return (
@@ -141,31 +93,31 @@ class Events extends PureComponent{
                                         <div className="row m-2">
                                             <div className="col-4">
                                                 <label htmlFor="begin">Start time</label>
-                                                <input className="form-control" type="datetime-local" id="begin" name="begin" defaultValue={newEvent.details.begin}/>
+                                                <input className="form-control" type="datetime-local" id="begin" name="begin" defaultValue={newEvent.begin}/>
                                             </div>
                                             <div className="col-4">
                                                 <label htmlFor="end">End time</label>
-                                                <input className="form-control" type="datetime-local" id="end" name="end" defaultValue={newEvent.details.end}/>
+                                                <input className="form-control" type="datetime-local" id="end" name="end" defaultValue={newEvent.end}/>
                                             </div>
                                             <div className="col-2">
                                                 <div className="dropdown m-4">
-                                                    <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Min age: {newEvent.details.minAge}</button>
+                                                    <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Min age: {newEvent.minAge}</button>
                                                     <div className="dropdown-menu scrollable" aria-labelledby="dropdownMenuButton">
-                                                        {[...Array(newEvent.details.maxAge ? newEvent.details.maxAge : 100)].map((e, i) => {return <div className="dropdown-item" onClick={() => {setNewEvent({...newEvent, details: {...newEvent.details, minAge: i}})}}>{++i}</div>})}
+                                                        {[...Array(newEvent.maxAge ? newEvent.maxAge : 100)].map((e, i) => {return <div className="dropdown-item" onClick={() => {setNewEvent({...newEvent, minAge: i})}}>{++i}</div>})}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="col-2">
                                                 <div className="dropdown m-4">
-                                                    <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Max age: {newEvent.details.maxAge}</button>
+                                                    <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Max age: {newEvent.maxAge}</button>
                                                     <div className="dropdown-menu scrollable" aria-labelledby="dropdownMenuButton">
-                                                        {[...Array(newEvent.details.minAge ? 101 - newEvent.details.minAge : 100)].map((e, i) => {return <div className="dropdown-item" onClick={() => {setNewEvent({...newEvent, details: {...newEvent.details, maxAge: i + (newEvent.details.minAge || 1)}})}}>{i + (newEvent.details.minAge || 1)}</div>})}
+                                                        {[...Array(newEvent.minAge ? 101 - newEvent.minAge : 100)].map((e, i) => {return <div className="dropdown-item" onClick={() => {setNewEvent({...newEvent, maxAge: i + (newEvent.minAge || 1)})}}>{i + (newEvent.minAge || 1)}</div>})}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="col-12">
                                                 <label htmlFor="location">Location</label>
-                                                <input className="form-control" type="address" id="location" name="location" defaultValue={newEvent.details.location}></input>
+                                                <input className="form-control" type="address" id="location" name="location" defaultValue={newEvent.location}></input>
                                             </div>
                                         </div>
                                         <div className="row m-2">
@@ -174,19 +126,19 @@ class Events extends PureComponent{
                                                     <div className="dropdown m-2">
                                                         <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Topics</button>
                                                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            {user.interests && this.renderInterests(user.interests, newEvent, setNewEvent, topics, setTopics)}
+                                                            {interests && interests.map((item) => <div className="dropdown-item" onClick={(e) => handleAddTopic(e, item.topic)}>{item.topic}</div>)}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {newEvent.details.topics && newEvent.details.topics.map((item) => {return <button className="btn col-2 m-2 border-secondary" onClick={(e) => handleClick(e, item)}>{item}</button>})}
+                                                {newEvent.topics && newEvent.topics.map((item) => {return <button className="btn col-2 m-2 border-secondary" onClick={(e) => handleRemoveTopic(e, item)}>{item}</button>})}
                                             </div>
                                         </div>
                                         <button className="btn btn-danger m-2" type="submit">Save</button>
                                         <button className="btn btn-success m-2" type="button" onClick={handleCreate}>{"Add new event"}</button>
-                                        {newEvent.details.id &&
+                                        {newEvent.id &&
                                             <>
-                                                <button className="btn btn-primary m-2" type="button" onClick={handleUpdate}>{"Update event " + newEvent.details.id}</button>
-                                                <button className="btn btn-danger m-2" type="button" onClick={handleDelete}>{"Delete event " + newEvent.details.id}</button>
+                                                <button className="btn btn-primary m-2" type="button" onClick={handleUpdate}>{"Update event " + newEvent.id}</button>
+                                                <button className="btn btn-danger m-2" type="button" onClick={handleDelete}>{"Delete event " + newEvent.id}</button>
                                             </>
                                         }
                                     </form>

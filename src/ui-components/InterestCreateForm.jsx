@@ -23,16 +23,24 @@ export default function InterestCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    taskName: "",
+    owner: "",
+    topic: "",
+    parent: "",
   };
-  const [taskName, setTaskName] = React.useState(initialValues.taskName);
+  const [owner, setOwner] = React.useState(initialValues.owner);
+  const [topic, setTopic] = React.useState(initialValues.topic);
+  const [parent, setParent] = React.useState(initialValues.parent);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setTaskName(initialValues.taskName);
+    setOwner(initialValues.owner);
+    setTopic(initialValues.topic);
+    setParent(initialValues.parent);
     setErrors({});
   };
   const validations = {
-    taskName: [{ type: "Required" }],
+    owner: [{ type: "Required" }],
+    topic: [{ type: "Required" }],
+    parent: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -60,7 +68,9 @@ export default function InterestCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          taskName,
+          owner,
+          topic,
+          parent,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -107,28 +117,82 @@ export default function InterestCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Task name"
+        label="Owner"
         isRequired={true}
         isReadOnly={false}
-        value={taskName}
+        value={owner}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              taskName: value,
+              owner: value,
+              topic,
+              parent,
             };
             const result = onChange(modelFields);
-            value = result?.taskName ?? value;
+            value = result?.owner ?? value;
           }
-          if (errors.taskName?.hasError) {
-            runValidationTasks("taskName", value);
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
           }
-          setTaskName(value);
+          setOwner(value);
         }}
-        onBlur={() => runValidationTasks("taskName", taskName)}
-        errorMessage={errors.taskName?.errorMessage}
-        hasError={errors.taskName?.hasError}
-        {...getOverrideProps(overrides, "taskName")}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
+      ></TextField>
+      <TextField
+        label="Topic"
+        isRequired={true}
+        isReadOnly={false}
+        value={topic}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              topic: value,
+              parent,
+            };
+            const result = onChange(modelFields);
+            value = result?.topic ?? value;
+          }
+          if (errors.topic?.hasError) {
+            runValidationTasks("topic", value);
+          }
+          setTopic(value);
+        }}
+        onBlur={() => runValidationTasks("topic", topic)}
+        errorMessage={errors.topic?.errorMessage}
+        hasError={errors.topic?.hasError}
+        {...getOverrideProps(overrides, "topic")}
+      ></TextField>
+      <TextField
+        label="Parent"
+        isRequired={false}
+        isReadOnly={false}
+        value={parent}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              owner,
+              topic,
+              parent: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.parent ?? value;
+          }
+          if (errors.parent?.hasError) {
+            runValidationTasks("parent", value);
+          }
+          setParent(value);
+        }}
+        onBlur={() => runValidationTasks("parent", parent)}
+        errorMessage={errors.parent?.errorMessage}
+        hasError={errors.parent?.hasError}
+        {...getOverrideProps(overrides, "parent")}
       ></TextField>
       <Flex
         justifyContent="space-between"
