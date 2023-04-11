@@ -33,7 +33,7 @@ class Events extends PureComponent{
                 {
                     ({user, interests, hosted, setHosted, newEvent, setNewEvent}) => {
                         async function createEvnt(evnt) {
-                            return await API.graphql({query: createEvent, variables: {input: {owner: evnt.owner, begin: evnt.begin, end: evnt.end, location: evnt.location, minAge: evnt.minAge, maxAge: evnt.maxAge, topics: evnt.topics, rsvps: evnt.rsvps, status: evnt.status}}});
+                            return await API.graphql({query: createEvent, variables: {input: {owner: user.owner, begin: evnt.begin, end: evnt.end, location: evnt.location, minAge: evnt.minAge, maxAge: evnt.maxAge, topics: evnt.topics, rsvps: evnt.rsvps, status: evnt.status}}});
                         };
                         async function updateEvnt(evnt) {
                             return await API.graphql({query: updateEvent, variables: {input: {id: evnt.id, owner: evnt.owner, begin: evnt.begin, end: evnt.end, location: evnt.location, minAge: evnt.minAge, maxAge: evnt.maxAge, topics: evnt.topics, rsvps: evnt.rsvps, status: evnt.status}}});
