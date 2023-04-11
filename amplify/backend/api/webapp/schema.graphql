@@ -16,7 +16,10 @@ type Interest @model @auth(rules: [{allow: owner}])
   parent: String
 }
 
-type Event @model @auth(rules: [{allow: owner}]) @aws_cognito_user_pools {
+type Event @model @auth(rules: [
+  {allow: owner},
+  {allow: public}
+]) @aws_api_key @aws_cognito_user_pools {
   owner: String! @index
   begin: String
   end: String

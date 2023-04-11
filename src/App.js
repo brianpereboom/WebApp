@@ -52,16 +52,14 @@ function App({ signOut }) {
           userObject = {owner: amplifyUserData.username, name: userData.data.listUsers.items[0].name, birthdate: userData.data.listUsers.items[0].birthdate, address: userData.data.listUsers.items[0].address};
         }
         await setUser(userObject);
-        const interestsData = await API.graphql({query: interestsByOwner, variables: {owner: amplifyUserData.username}, authMode: 'AMAZON_COGNITO_USER_POOLS'});
+        const interestsData = await API.graphql({query: interestsByOwner, variables: {owner: amplifyUserData.username}});
         const interestsContent = await interestsData.data.interestsByOwner.items;
         await setInterests(interestsContent);
         const hostedData = await API.graphql({query: eventsByOwner, variables: {owner: amplifyUserData.username}});
         await setHosted(hostedData.data.eventsByOwner.items);
-        console.log(interestsData.data.interestsByOwner.items);
         if (interestsContent) {
-          const recommendedData = await API.graphql({query: listEvents});
-          console.log(recommendedData);
-          const filteredRecommended = await recommendedData.data.listEvents.items.filter((item) => interestsContent.some((int) => item.topics.includes(int.topic)));
+          const recommendedData = await API.graphql({query: listEvents, authMode: 'API_KEY'});
+          const filteredRecommended = await recommendedData.data.listEvents.items.filter((item) => interestsContent.some((int) => item.topics && item.topics.includes(int.topic)));
           await setRecommended(filteredRecommended);
         }
         await localStorage.setItem("init", false);
