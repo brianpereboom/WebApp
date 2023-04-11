@@ -105,28 +105,6 @@ export const createEvent = /* GraphQL */ `
       maxAge
       topics
       rsvps
-      status
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteEvent = /* GraphQL */ `
-  mutation DeleteEvent(
-    $input: DeleteEventInput!
-    $condition: ModelEventConditionInput
-  ) {
-    deleteEvent(input: $input, condition: $condition) {
-      owner
-      begin
-      end
-      location
-      minAge
-      maxAge
-      topics
-      rsvps
-      status
       id
       createdAt
       updatedAt
@@ -147,7 +125,26 @@ export const updateEvent = /* GraphQL */ `
       maxAge
       topics
       rsvps
-      status
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteEvent = /* GraphQL */ `
+  mutation DeleteEvent(
+    $input: DeleteEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    deleteEvent(input: $input, condition: $condition) {
+      owner
+      begin
+      end
+      location
+      minAge
+      maxAge
+      topics
+      rsvps
       id
       createdAt
       updatedAt

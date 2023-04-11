@@ -16,10 +16,7 @@ type Interest @model @auth(rules: [{allow: owner}])
   parent: String
 }
 
-type Event @model @auth(rules: [
-  {allow: owner},
-  {allow: public, operations: [read, update]}
-]) {
+type Event @model @auth(rules: [{allow: owner}]) @aws_cognito_user_pools {
   owner: String! @index
   begin: String
   end: String
@@ -28,9 +25,4 @@ type Event @model @auth(rules: [
   maxAge: Int
   topics: [String]
   rsvps: [String]
-  status: Status! @index(name: "eventsByStatus", queryField: "eventsByStatus")
-}
-
-enum Status {
-  EXISTS
 }

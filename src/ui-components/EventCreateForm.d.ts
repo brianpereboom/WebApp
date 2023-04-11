@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
@@ -21,7 +21,6 @@ export declare type EventCreateFormInputValues = {
     maxAge?: number;
     topics?: string[];
     rsvps?: string[];
-    status?: string;
 };
 export declare type EventCreateFormValidationValues = {
     owner?: ValidationFunction<string>;
@@ -32,7 +31,6 @@ export declare type EventCreateFormValidationValues = {
     maxAge?: ValidationFunction<number>;
     topics?: ValidationFunction<string>;
     rsvps?: ValidationFunction<string>;
-    status?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type EventCreateFormOverridesProps = {
@@ -45,7 +43,6 @@ export declare type EventCreateFormOverridesProps = {
     maxAge?: PrimitiveOverrideProps<TextFieldProps>;
     topics?: PrimitiveOverrideProps<TextFieldProps>;
     rsvps?: PrimitiveOverrideProps<TextFieldProps>;
-    status?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type EventCreateFormProps = React.PropsWithChildren<{
     overrides?: EventCreateFormOverridesProps | undefined | null;

@@ -10,7 +10,7 @@ import "bootstrap/dist/js/bootstrap";
 
 import { Auth, API } from "aws-amplify";
 import { createUser } from "./graphql/mutations";
-import { listUsers, eventsByOwner, eventsByStatus, interestsByOwner } from "./graphql/queries";
+import { listUsers, listEvents, eventsByOwner, interestsByOwner } from "./graphql/queries";
 
 import "@aws-amplify/ui-react/styles.css";
 import {
@@ -52,14 +52,16 @@ function App({ signOut }) {
           userObject = {owner: amplifyUserData.username, name: userData.data.listUsers.items[0].name, birthdate: userData.data.listUsers.items[0].birthdate, address: userData.data.listUsers.items[0].address};
         }
         await setUser(userObject);
-        const interestsData = await API.graphql({query: interestsByOwner, variables: {owner: amplifyUserData.username}});
-        const interestsContent = interestsData.data.interestsByOwner.items;
+        const interestsData = await API.graphql({query: interestsByOwner, variables: {owner: amplifyUserData.username}, authMode: 'AMAZON_COGNITO_USER_POOLS'});
+        const interestsContent = await interestsData.data.interestsByOwner.items;
         await setInterests(interestsContent);
         const hostedData = await API.graphql({query: eventsByOwner, variables: {owner: amplifyUserData.username}});
         await setHosted(hostedData.data.eventsByOwner.items);
+        console.log(interestsData.data.interestsByOwner.items);
         if (interestsContent) {
-          const recommendedData = await API.graphql({query: eventsByStatus, variables: {status: "EXISTS"}});
-          const filteredRecommended = recommendedData.data.eventsByStatus.items.filter((item) => interestsContent.some((int) => item.topics.includes(int.topic)));
+          const recommendedData = await API.graphql({query: listEvents});
+          console.log(recommendedData);
+          const filteredRecommended = await recommendedData.data.listEvents.items.filter((item) => interestsContent.some((int) => item.topics.includes(int.topic)));
           await setRecommended(filteredRecommended);
         }
         await localStorage.setItem("init", false);
@@ -71,7 +73,7 @@ function App({ signOut }) {
   const cachedEvents = JSON.parse(localStorage.getItem("events")) || [];
   const [events, setEvents] = useState(cachedEvents);
   
-  const cachedEvent = JSON.parse(localStorage.getItem("newEvent")) || {owner: user.owner, begin: "", end: "", location: "", minAge: 0, maxAge: 100, topics: [], rsvps: [], status: "EXISTS"};
+  const cachedEvent = JSON.parse(localStorage.getItem("newEvent")) || {owner: user.owner, begin: "", end: "", location: "", minAge: 0, maxAge: 100, topics: [], rsvps: []};
   const [newEvent, setNewEvent] = useState(cachedEvent);
 
   useEffect(() => {

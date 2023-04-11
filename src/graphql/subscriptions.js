@@ -105,7 +105,6 @@ export const onCreateEvent = /* GraphQL */ `
       maxAge
       topics
       rsvps
-      status
       id
       createdAt
       updatedAt
@@ -126,7 +125,6 @@ export const onUpdateEvent = /* GraphQL */ `
       maxAge
       topics
       rsvps
-      status
       id
       createdAt
       updatedAt
@@ -147,7 +145,6 @@ export const onDeleteEvent = /* GraphQL */ `
       maxAge
       topics
       rsvps
-      status
       id
       createdAt
       updatedAt

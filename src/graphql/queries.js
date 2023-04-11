@@ -109,7 +109,6 @@ export const getEvent = /* GraphQL */ `
       maxAge
       topics
       rsvps
-      status
       id
       createdAt
       updatedAt
@@ -132,7 +131,6 @@ export const listEvents = /* GraphQL */ `
         maxAge
         topics
         rsvps
-        status
         id
         createdAt
         updatedAt
@@ -165,40 +163,6 @@ export const eventsByOwner = /* GraphQL */ `
         maxAge
         topics
         rsvps
-        status
-        id
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const eventsByStatus = /* GraphQL */ `
-  query EventsByStatus(
-    $status: Status!
-    $sortDirection: ModelSortDirection
-    $filter: ModelEventFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    eventsByStatus(
-      status: $status
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        owner
-        begin
-        end
-        location
-        minAge
-        maxAge
-        topics
-        rsvps
-        status
         id
         createdAt
         updatedAt

@@ -14,7 +14,6 @@ class Events extends PureComponent{
             event.preventDefault();
             setNewEvent(task);
         };
-
         return (
             <button className="btn col-2 btn-light border-secondary" onClick={handleClick}>
                 <div>{task.id}</div>
@@ -41,7 +40,7 @@ class Events extends PureComponent{
                         async function deleteEvnt(id) {
                             await API.graphql({query: deleteEvent, variables: {input: {id: id}}});
                         };
-                        // handleAddTopic not working when topics is empty
+                        
                         const handleAddTopic = (event, topic) => {
                             event.preventDefault();
                             if (newEvent.topics === null)
@@ -83,7 +82,7 @@ class Events extends PureComponent{
                             const id = newEvent.id;
                             deleteEvnt(id);
                             setHosted([...hosted.filter((host) => host.id === id)]);
-                            setNewEvent({owner: user.owner, begin: "", end: "", location: "", minAge: 0, maxAge: 100, topics: [], rsvps: [], status: "EXISTS"});
+                            setNewEvent({owner: user.owner, begin: "", end: "", location: "", minAge: 0, maxAge: 100, topics: [], rsvps: []});
                         };
 
                         return (
