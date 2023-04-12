@@ -39,7 +39,7 @@ class Interests extends PureComponent {
 
                     const handleRemove = (event, item) => {
                         event.preventDefault();
-                        if (item.id !== "")
+                        if (item.id)
                             deleteInt(item.id);
                         const updatedInterests = [...interests.map((i) => {
                             if (i.parent === item.topic) {
@@ -49,7 +49,7 @@ class Interests extends PureComponent {
                             }
                             return {...i};
                         })];
-                        setInterests([...updatedInterests.filter((i) => i.topic === item.topic && i.parent === item.parent)]);
+                        setInterests([...updatedInterests.filter((i) => i.topic !== item.topic || i.parent !== item.parent)]);
                     };
 
                     const renderInterests = (parent, tasks) => {

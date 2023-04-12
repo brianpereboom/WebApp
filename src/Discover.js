@@ -26,16 +26,16 @@ class Discover extends PureComponent {
 
     renderEvent = (owner, task, recommended, setRecommended) => {
         const handleClick = (event) => {
-            const rsvped = task.rsvps === null ? {id: task.id, rsvps: [owner]} : task.rsvps.includes(owner) ? {id: task.id, rsvps: [...task.rsvps.filter((r) => r !== owner)]} : {id: task.id, rsvps: [...task.rsvps, owner]};
-            API.graphql({query: updateEvent, variables: {input: rsvped}});
+            const rsvped = task.rsvps === null ? {id: task.id, rsvps: [owner]} : (task.rsvps.includes(owner) ? {id: task.id, rsvps: [...task.rsvps.filter((r) => r !== owner)]} : {id: task.id, rsvps: [...task.rsvps, owner]});
+            API.graphql({query: updateEvent, variables: {input: rsvped}, authMode: "API_KEY"});
             setRecommended([...recommended.filter((r) => r.id !== task.id), {...task, rsvps: [...rsvped.rsvps]}]);
         };
-
+        
         const renderInfo = () => {
             return (
                 <>
                     <div>{task.id}</div>
-                    <div>{this.toString(task.begin)}</div>
+                    <div>{(new Date() > new Date(task.begin)) ? "NOW" : this.toString(task.begin)}</div>
                     <div>{this.toString(task.end)}</div>
                     <div>Location: {task.location}</div>
                     <div>Ages: {task.minAge}-{task.maxAge}</div>

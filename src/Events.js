@@ -5,6 +5,14 @@ import { API } from 'aws-amplify';
 import { createEvent, updateEvent, deleteEvent } from './graphql/mutations';
 
 class Events extends PureComponent{
+    constructor () {
+        super();
+        this.state = {
+            focus: false,
+            datetimeChange: false
+        };
+    };
+
     toString = (datetime) => {
         return (new Date(datetime)).toLocaleString("en-GB", {day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "numeric"});
     }
@@ -59,9 +67,62 @@ class Events extends PureComponent{
                             setNewEvent({
                                 ...newEvent,
                                 begin: event.target.begin.value,
-                                end: event.target.end.value,
-                                location: event.target.location.value
+                                end: event.target.end.value
                             });
+                            this.setState({unsavedChanges: false});
+                        };
+
+                        const datetimeSwitch = (change) => {
+                            if (change)
+                                return (
+                                    <>
+                                        <div className="col-2 mt-4">
+                                            <button className="btn btn-danger" type="submit">Save</button>
+                                        </div>
+                                        <div className="col-2 mt-4">
+                                            <button className="btn btn-primary" onClick={() => {this.setState({datetimeChange: false}); setNewEvent({...newEvent});}}>Revert</button>
+                                        </div>
+                                    </>
+                                );
+                            else
+                                return (
+                                    <>
+                                        <div className="col-2">
+                                            <div className="dropdown m-4">
+                                                <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Min age: {newEvent.minAge}</button>
+                                                <div className="dropdown-menu scrollable" aria-labelledby="dropdownMenuButton">
+                                                    {[...Array(newEvent.maxAge ? newEvent.maxAge + 1 : 101)].map((_, i) => {return <div className="dropdown-item" onClick={() => setNewEvent({...newEvent, minAge: i})}>{i}</div>})}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-2">
+                                            <div className="dropdown m-4">
+                                                <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Max age: {newEvent.maxAge}</button>
+                                                <div className="dropdown-menu scrollable" aria-labelledby="dropdownMenuButton">
+                                                    {[...Array(newEvent.minAge ? 101 - newEvent.minAge : 101)].map((e, i) => {return <div className="dropdown-item" onClick={() => {setNewEvent({...newEvent, maxAge: i + (newEvent.minAge || 0)})}}>{i + (newEvent.minAge || 0)}</div>})}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-12">
+                                            <label htmlFor="location">Location</label>
+                                            <input className="form-control" type="address" id="location" name="location" onFocus={handleFocus} onBlur={handleLocation} defaultValue={newEvent.location}></input>
+                                        </div>
+                                    </>
+                                );
+                        };
+
+                        const handleFocus = (event) => {
+                            this.setState({focus: true});
+                        };
+
+                        const handleLocation = (event) => {
+                            if (this.state.focus) {
+                                setNewEvent({
+                                    ...newEvent,
+                                    location: event.target.value
+                                });
+                                this.setState({focus: false});
+                            }
                         };
 
                         const handleCreate = (event) => {
@@ -81,7 +142,7 @@ class Events extends PureComponent{
                             event.preventDefault();
                             const id = newEvent.id;
                             deleteEvnt(id);
-                            setHosted([...hosted.filter((host) => host.id === id)]);
+                            setHosted([...hosted.filter((host) => host.id !== id)]);
                             setNewEvent({owner: user.owner, begin: "", end: "", location: "", minAge: 0, maxAge: 100, topics: [], rsvps: []});
                         };
 
@@ -92,49 +153,34 @@ class Events extends PureComponent{
                                         <div className="row m-2">
                                             <div className="col-4">
                                                 <label htmlFor="begin">Start time</label>
-                                                <input className="form-control" type="datetime-local" id="begin" name="begin" defaultValue={newEvent.begin}/>
+                                                <input className="form-control" type="datetime-local" id="begin" name="begin" onChange={() => this.setState({datetimeChange: true})} defaultValue={newEvent.begin}/>
                                             </div>
                                             <div className="col-4">
                                                 <label htmlFor="end">End time</label>
-                                                <input className="form-control" type="datetime-local" id="end" name="end" defaultValue={newEvent.end}/>
+                                                <input className="form-control" type="datetime-local" id="end" name="end" onChange={() => this.setState({datetimeChange: true})} defaultValue={newEvent.end}/>
                                             </div>
-                                            <div className="col-2">
-                                                <div className="dropdown m-4">
-                                                    <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Min age: {newEvent.minAge}</button>
-                                                    <div className="dropdown-menu scrollable" aria-labelledby="dropdownMenuButton">
-                                                        {[...Array(newEvent.maxAge ? newEvent.maxAge : 100)].map((e, i) => {return <div className="dropdown-item" onClick={() => {setNewEvent({...newEvent, minAge: i})}}>{++i}</div>})}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-2">
-                                                <div className="dropdown m-4">
-                                                    <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Max age: {newEvent.maxAge}</button>
-                                                    <div className="dropdown-menu scrollable" aria-labelledby="dropdownMenuButton">
-                                                        {[...Array(newEvent.minAge ? 101 - newEvent.minAge : 100)].map((e, i) => {return <div className="dropdown-item" onClick={() => {setNewEvent({...newEvent, maxAge: i + (newEvent.minAge || 1)})}}>{i + (newEvent.minAge || 1)}</div>})}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-12">
-                                                <label htmlFor="location">Location</label>
-                                                <input className="form-control" type="address" id="location" name="location" defaultValue={newEvent.location}></input>
-                                            </div>
+                                            {datetimeSwitch(this.state.datetimeChange)}
                                         </div>
-                                        <div className="row m-2">
-                                            <div className="col-12 border border-primary border-2 mt-2">
-                                                <div className="col-12">
-                                                    <div className="dropdown m-2">
-                                                        <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Topics</button>
-                                                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                            {interests && interests.map((item) => <div className="dropdown-item" onClick={(e) => handleAddTopic(e, item.topic)}>{item.topic}</div>)}
+                                        {
+                                            !this.state.datetimeChange &&
+                                            <>
+                                                <div className="row m-2">
+                                                    <div className="col-12 border border-primary border-2 mt-2">
+                                                        <div className="col-12">
+                                                            <div className="dropdown m-2">
+                                                                <button className="btn dropdown-toggle border-secondary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Topics</button>
+                                                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                                    {interests && interests.map((item) => <div className="dropdown-item" onClick={(e) => handleAddTopic(e, item.topic)}>{item.topic}</div>)}
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                        {newEvent.topics && newEvent.topics.map((item) => {return <button className="btn col-2 m-2 border-secondary" onClick={(e) => handleRemoveTopic(e, item)}>{item}</button>})}
                                                     </div>
                                                 </div>
-                                                {newEvent.topics && newEvent.topics.map((item) => {return <button className="btn col-2 m-2 border-secondary" onClick={(e) => handleRemoveTopic(e, item)}>{item}</button>})}
-                                            </div>
-                                        </div>
-                                        <button className="btn btn-danger m-2" type="submit">Save</button>
-                                        <button className="btn btn-success m-2" type="button" onClick={handleCreate}>{"Add new event"}</button>
-                                        {newEvent.id &&
+                                                <button className="btn btn-success m-2" type="button" onClick={handleCreate}>{"Add new event"}</button>
+                                            </>
+                                        }
+                                        {newEvent.id && !this.state.datetimeChange &&
                                             <>
                                                 <button className="btn btn-primary m-2" type="button" onClick={handleUpdate}>{"Update event " + newEvent.id}</button>
                                                 <button className="btn btn-danger m-2" type="button" onClick={handleDelete}>{"Delete event " + newEvent.id}</button>
