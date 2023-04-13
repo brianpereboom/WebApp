@@ -61,12 +61,24 @@ function App({ signOut }) {
           const today = new Date();
           const age = Math.floor((today - new Date(userObject.birthdate))/31557600000);
           const recommendedData = Promise.all(await interestsContent.map(async (int) => {
-            const result = await API.graphql({query: listEvents, variables: {filter: {and: {topics: {contains: int.topic}, minAge: {le: age}, maxAge: {ge: age}}}}, authMode: 'API_KEY'});
+            const result = await API.graphql({query: listEvents, variables: {filter: {
+              and: {
+                topics: {
+                  contains: int.topic
+                },
+                minAge: {
+                  le: age
+                },
+                maxAge: {
+                  ge: age
+                }
+              }
+            }}, authMode: 'API_KEY'});
             return result;
           }));
           await setRecommended([...(await recommendedData).map((item) => {return item.data.listEvents.items})].flat().filter((item, index, self) => (
-            index === self.findIndex((elem) => elem.id === item.id && today < new Date(item.end)
-          ))));
+            index === self.findIndex((elem) => elem.id === item.id && today < new Date(item.end))
+          )));
         }
         await localStorage.setItem("init", false);
       };

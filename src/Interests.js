@@ -34,7 +34,14 @@ class Interests extends PureComponent {
 
                     const handleAdd = (event) => {
                         event.preventDefault();
-                        setInterests([...interests, {topic: event.target.interest.value, parent: null}]);
+                        setInterests([...interests, {
+                            topic: event.target.interest.value
+                                .toLowerCase()
+                                .split(' ')
+                                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                                .join(' '),
+                            parent: null
+                        }]);
                     };
 
                     const handleRemove = (event, item) => {

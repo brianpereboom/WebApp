@@ -244,12 +244,12 @@ export default function EventUpdateForm(props) {
   const rsvpsRef = React.createRef();
   const validations = {
     owner: [{ type: "Required" }],
-    begin: [],
-    end: [],
-    location: [],
-    minAge: [],
-    maxAge: [],
-    topics: [],
+    begin: [{ type: "Required" }],
+    end: [{ type: "Required" }],
+    location: [{ type: "Required" }],
+    minAge: [{ type: "Required" }],
+    maxAge: [{ type: "Required" }],
+    topics: [{ type: "Required" }],
     rsvps: [],
   };
   const runValidationTasks = async (
@@ -365,7 +365,7 @@ export default function EventUpdateForm(props) {
       ></TextField>
       <TextField
         label="Begin"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={begin}
         onChange={(e) => {
@@ -396,7 +396,7 @@ export default function EventUpdateForm(props) {
       ></TextField>
       <TextField
         label="End"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={end}
         onChange={(e) => {
@@ -427,7 +427,7 @@ export default function EventUpdateForm(props) {
       ></TextField>
       <TextField
         label="Location"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={location}
         onChange={(e) => {
@@ -458,7 +458,7 @@ export default function EventUpdateForm(props) {
       ></TextField>
       <TextField
         label="Min age"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="number"
         step="any"
@@ -493,7 +493,7 @@ export default function EventUpdateForm(props) {
       ></TextField>
       <TextField
         label="Max age"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         type="number"
         step="any"
@@ -557,7 +557,7 @@ export default function EventUpdateForm(props) {
       >
         <TextField
           label="Topics"
-          isRequired={false}
+          isRequired={true}
           isReadOnly={false}
           value={currentTopicsValue}
           onChange={(e) => {
