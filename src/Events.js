@@ -89,8 +89,14 @@ class Events extends PureComponent{
 
                         const handleCreate = async (event) => {
                             event.preventDefault();
-                            if (newEvent.topics.length === 0)
-                                alert("No topics have been selected for this event.\nPlease add topics and update the event.");
+                            if (!(newEvent.begin && newEvent.end)) {
+                                alert("No start and end times have been selected for this event.\nPlease add a start and end time.");
+                                return;
+                            }
+                            if (newEvent.topics.length === 0) {
+                                alert("No topics have been selected for this event.\nPlease add topics.");
+                                return;
+                            }
                             const createdEvent = await createEvnt(newEvent);
                             setHosted([...hosted, createdEvent]);
                             setNewEvent(createdEvent)
@@ -98,8 +104,14 @@ class Events extends PureComponent{
 
                         const handleUpdate = (event) => {
                             event.preventDefault();
-                            if (newEvent.topics.length === 0)
-                                alert("No topics have been selected for this event. Nobody will see this event until topics have been added.");
+                            if (!(newEvent.begin && newEvent.end)) {
+                                alert("No start and end times have been selected for this event.\nPlease add a start and end time.");
+                                return;
+                            }
+                            if (newEvent.topics.length === 0) {
+                                alert("No topics have been selected for this event.\nPlease add topics.");
+                                return;
+                            }
                             setHosted([...hosted.filter((item) => item.id !== newEvent.id), newEvent]);
                             updateEvnt(newEvent);
                         };
